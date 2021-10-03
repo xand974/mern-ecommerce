@@ -1,0 +1,6 @@
+$db = /config
+$controllers = /controllers
+$middlewares = /middlewares
+$models = /models
+$routers = /routers
+$helpers = /helpers
