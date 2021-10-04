@@ -22,8 +22,12 @@ export default function Navbar() {
           <li>Tous les articles</li>
         </ul>
         <div className="navbar__account">
-          <ShoppingBagOutlined className="icon bag" />
-          <AccountCircleOutlined className="icon" />
+          <Link to="/cart">
+            <ShoppingBagOutlined className="icon bag" />
+          </Link>
+          <Link to="/user">
+            <AccountCircleOutlined className="icon" />
+          </Link>
         </div>
       </nav>
     </header>

@@ -54,15 +54,6 @@
             height: 30px;
             border-radius: 50%;
             cursor: pointer;
-            &.black {
-              background: #000;
-            }
-            &.gold {
-              background: rgb(240, 255, 109);
-            }
-            &.blue {
-              background: rgb(30, 68, 240);
-            }
           }
         }
         form {

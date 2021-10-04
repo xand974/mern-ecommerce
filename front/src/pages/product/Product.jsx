@@ -1,5 +1,9 @@
 import "./product.scss";
 
+const ColorFilterButton = ({ color }) => {
+  return <div className="color" style={{ backgroundColor: color }}></div>;
+};
+
 export default function Product() {
   return (
     <div className="product">
@@ -24,9 +28,9 @@ export default function Product() {
           <div className="options__container">
             <div className="colors">
               <span>Color</span>
-              <div className="color blue"></div>
-              <div className="color black"></div>
-              <div className="color gold"></div>
+              <ColorFilterButton color="blue" />
+              <ColorFilterButton color="black" />
+              <ColorFilterButton color="crimson" />
             </div>
             <form>
               <label htmlFor="size">Size</label>

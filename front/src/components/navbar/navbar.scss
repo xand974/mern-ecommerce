@@ -53,10 +53,16 @@
     .navbar__account {
       display: flex;
       align-items: center;
-      .icon {
-        margin: 0 10px;
-        font-size: 30px;
-        cursor: pointer;
+
+      a {
+        color: black;
+        display: flex;
+        align-items: center;
+        .icon {
+          margin: 0 10px;
+          font-size: 30px;
+          cursor: pointer;
+        }
       }
     }
   }
