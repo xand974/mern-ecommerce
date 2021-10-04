@@ -1,0 +1,119 @@
+.product {
+  width: 80%;
+  margin: 30px auto;
+  height: calc(100vh - 129px);
+  display: flex;
+
+  .left {
+    flex: 1;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+  }
+  .right {
+    flex: 1;
+    padding: 40px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    .wrapper {
+      h3 {
+        font-size: 40px;
+      }
+      p {
+        margin: 40px 0;
+      }
+      .description {
+        width: 80%;
+        font-size: 20px;
+      }
+      .prix {
+        font-size: 50px;
+        font-weight: lighter;
+      }
+      .options__container {
+        margin: 40px 0;
+        width: 50%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .colors {
+          display: flex;
+          align-items: center;
+          span {
+            font-size: 20px;
+            margin-right: 10px;
+          }
+          .color {
+            margin-right: 5px;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            &.black {
+              background: #000;
+            }
+            &.gold {
+              background: rgb(240, 255, 109);
+            }
+            &.blue {
+              background: rgb(30, 68, 240);
+            }
+          }
+        }
+        form {
+          display: flex;
+          align-items: center;
+          label {
+            font-size: 20px;
+            margin-right: 10px;
+          }
+          select {
+            padding: 5px;
+          }
+        }
+      }
+      .cart__container {
+        width: 50%;
+        display: flex;
+        justify-content: space-between;
+        .quantity {
+          display: flex;
+          align-items: center;
+          button {
+            font-size: 30px;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+          }
+          span {
+            font-size: 30px;
+            margin: 0 10px;
+            font-weight: bold;
+            border: 1px solid rgb(95, 72, 158);
+            border-radius: 5px;
+            padding: 5px 20px;
+          }
+        }
+        button {
+          font-size: 17px;
+          padding: 5px;
+          border: 1px solid black;
+          background: none;
+          border-radius: 15px;
+          color: #000;
+          cursor: pointer;
+          transition: all 0.3s ease-in-out;
+          &:hover {
+            background-color: black;
+            color: white;
+          }
+        }
+      }
+    }
+  }
+}

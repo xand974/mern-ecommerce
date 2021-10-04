@@ -3,13 +3,16 @@ import {
   SearchOutlined,
   ShoppingBagOutlined,
 } from "@mui/icons-material";
+import { Link } from "react-router-dom";
 import "./navbar.scss";
 
 export default function Navbar() {
   return (
     <header className="navbar">
       <nav>
-        <h1>MALET</h1>
+        <Link to="/" style={{ textDecoration: "none", color: "black" }}>
+          <h1>MALET</h1>
+        </Link>
         <ul>
           <form>
             <input placeholder="search" type="text" />
