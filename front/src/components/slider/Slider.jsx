@@ -1,41 +1,55 @@
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
+import { useRef, useState } from "react";
 import "./slider.scss";
+import { slideItems } from "mockData";
 
 export default function Slider() {
+  var [slideIndex, setSlideIndex] = useState(0);
+  const sliderContainer = useRef();
+  const handleSliderClick = (direction) => {
+    // console.log(slideIndex);
+    if (direction === "left") {
+      setSlideIndex(slideIndex > 0 ? slideIndex - 1 : slideItems.length - 1);
+      sliderContainer.current.style.transform = `translateX( ${
+        -80 * slideIndex
+      }vw)`;
+    } else if (direction === "right") {
+      setSlideIndex(slideIndex < slideItems.length - 1 ? slideIndex + 1 : 0);
+      sliderContainer.current.style.transform = `translateX( ${
+        -80 * slideIndex
+      }vw)`;
+    }
+  };
+
   return (
     <div className="slider">
       <div className="wrapper">
-        <ArrowBackIos className="arrow left" />
-        <div className="slider__images">
-          <div className="slider__container">
-            <img
-              src="https://images.unsplash.com/photo-1599255068390-206e0d068539?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=465&q=80"
-              alt=""
-            />
-          </div>
-
-          <div className="slider__container">
-            <img
-              src="https://images.unsplash.com/photo-1523647341782-d761bce0004c?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=387&q=80"
-              alt=""
-            />
-          </div>
-
-          <div className="slider__container">
-            <img
-              src="https://images.unsplash.com/photo-1505308088817-f1e3cb2a2f63?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1169&q=80"
-              alt=""
-            />
-          </div>
-
-          <div className="slider__container">
-            <img
-              src="https://images.unsplash.com/photo-1529374255404-311a2a4f1fd9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1169&q=80"
-              alt=""
-            />
-          </div>
+        <ArrowBackIos
+          className="arrow left"
+          onClick={() => {
+            handleSliderClick("left");
+          }}
+        />
+        <div className="slider__images" ref={sliderContainer}>
+          {slideItems.map((item, key) => {
+            return (
+              <div className="slider__container" key={key}>
+                <img src={item.img} alt="" />
+                <div className="container__infos">
+                  <h3>{item.title}</h3>
+                  <p>{item.desc}</p>
+                  <button>COMMANDER</button>
+                </div>
+              </div>
+            );
+          })}
         </div>
-        <ArrowForwardIos className="arrow right" />
+        <ArrowForwardIos
+          className="arrow right"
+          onClick={() => {
+            handleSliderClick("right");
+          }}
+        />
       </div>
     </div>
   );
