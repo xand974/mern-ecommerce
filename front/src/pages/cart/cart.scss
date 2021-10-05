@@ -3,4 +3,59 @@
   margin: auto;
   height: max-content;
   padding: 20px 0;
+
+  h1 {
+    font-size: 40px;
+    text-align: center;
+  }
+  .cart__links {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+
+    .cart__links__text {
+      border: 2px solid black;
+      background: none;
+      font-size: 17px;
+      padding: 5px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .cart__links__wrapper {
+      display: flex;
+      align-items: center;
+      span {
+        color: var(--gray);
+        margin: 0 10px;
+        border-bottom: 1px solid var(--gray);
+        cursor: pointer;
+      }
+    }
+    .payment__btn {
+      padding: 5px 10px;
+      font-size: 17px;
+      background: black;
+      color: white;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+    }
+  }
+  .container {
+    margin-top: 40px;
+    display: flex;
+
+    .items {
+      flex: 2;
+      display: flex;
+      flex-direction: column;
+    }
+    .checkout {
+      flex: 1;
+      border: 1px solid var(--light-gray);
+      padding: 10px;
+      height: 50vh;
+    }
+  }
 }

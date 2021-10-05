@@ -1,8 +1,5 @@
 import "./product.scss";
-
-const ColorFilterButton = ({ color }) => {
-  return <div className="color" style={{ backgroundColor: color }}></div>;
-};
+import ColorFilterButton from "components/filterButton/ColorFilterButton";
 
 export default function Product() {
   return (

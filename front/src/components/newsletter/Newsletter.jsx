@@ -1,4 +1,4 @@
-import Shape from "components/Shape/Shape";
+import Shape from "components/shape/Shape";
 import "./newsletter.scss";
 
 export default function Newsletter() {

@@ -3,9 +3,14 @@
   --nav-link-color: #6b6b6b;
   --gray: #b6b6b6;
   --dark-gray: #1b1b1b;
+  --light-gray: #e4e4e4;
   --main-background-color: #f1f1f1;
 }
 
 body {
   background-color: var(--main-background-color);
+}
+a {
+  text-decoration: none;
+  color: inherit;
 }
