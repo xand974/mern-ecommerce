@@ -1,0 +1,10 @@
+.shape {
+  position: absolute;
+
+  width: 50vw;
+  height: 50vh;
+
+  clip-path: circle(25.4% at 50% 50%);
+
+  z-index: 50;
+}

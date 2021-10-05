@@ -1,12 +1,13 @@
+import "./app.scss";
 import Navbar from "components/navbar/Navbar";
+import Footer from "components/footer/Footer";
 import Home from "pages/home/Home";
 import ProductList from "pages/productList/ProductList";
-import "./app.scss";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Product from "pages/product/Product";
 import Cart from "pages/cart/Cart";
 import Login from "pages/login/Login";
 import Register from "pages/register/Register";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 export default function App() {
   return (
@@ -23,7 +24,6 @@ export default function App() {
             <Navbar />
             <Route path="/" exact>
               <Home />
-              <ProductList categoryTitle="TOUS LES PRODUITS" />
             </Route>
             <Route path="/all" exact>
               <ProductList
@@ -37,6 +37,7 @@ export default function App() {
             <Route path="/cart" exact>
               <Cart />
             </Route>
+            <Footer />
           </>
         </Switch>
       </div>
