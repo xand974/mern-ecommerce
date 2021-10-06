@@ -9,6 +9,7 @@
   .title {
     display: flex;
     align-items: center;
+    margin: 20px 0;
     @include mobile {
       flex-direction: column;
     }

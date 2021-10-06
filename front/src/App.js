@@ -7,21 +7,22 @@ import Product from "pages/product/Product";
 import Cart from "pages/cart/Cart";
 import Login from "pages/login/Login";
 import Register from "pages/register/Register";
+import NotFound from "pages/notFound/NotFound";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 export default function App() {
   return (
     <Router>
       <div className="App">
-        <Switch>
-          <Route path="/login" exact>
-            <Login />
-          </Route>
-          <Route path="/register" exact>
-            <Register />
-          </Route>
-          <>
-            <Navbar />
+        <Route path="/login" exact>
+          <Login />
+        </Route>
+        <Route path="/register" exact>
+          <Register />
+        </Route>
+        <>
+          <Navbar />
+          <Switch>
             <Route path="/" exact>
               <Home />
             </Route>
@@ -31,15 +32,21 @@ export default function App() {
                 printCategory={true}
               />
             </Route>
+            <Route path="/category" exact>
+              <ProductList printCategory={true} />
+            </Route>
             <Route path="/product" exact>
               <Product />
             </Route>
             <Route path="/cart" exact>
               <Cart />
             </Route>
-            <Footer />
-          </>
-        </Switch>
+            <Route path="*">
+              <NotFound />
+            </Route>
+          </Switch>
+          <Footer />
+        </>
       </div>
     </Router>
   );

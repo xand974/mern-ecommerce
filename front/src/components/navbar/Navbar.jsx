@@ -18,8 +18,12 @@ export default function Navbar() {
             <input placeholder="search" type="text" />
             <SearchOutlined className="search" />
           </form>
-          <li>Collections</li>
-          <li>Tous les articles</li>
+          <Link to="/category">
+            <li>Collections</li>
+          </Link>
+          <Link to="/all">
+            <li>Tous les articles</li>
+          </Link>
         </ul>
         <div className="navbar__account">
           <Link to="/cart">
