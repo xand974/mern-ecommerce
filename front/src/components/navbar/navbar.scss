@@ -1,18 +1,28 @@
+@import "../../app.scss";
 .navbar {
   width: 80%;
   margin: 0 auto;
-
+  @include mobile {
+    width: 100%;
+  }
   nav {
     padding: 10px;
-
     display: flex;
     justify-content: space-between;
     align-items: center;
     background-color: var(--nav-background-color);
+    margin-bottom: 20px;
 
+    @include mobile {
+      width: 100%;
+      height: 10vh;
+    }
     h1 {
       font-size: 40px;
       border-bottom: 1px solid black;
+      @include mobile {
+        font-size: 30px;
+      }
     }
 
     ul {
@@ -22,6 +32,9 @@
         display: flex;
         align-items: center;
         position: relative;
+        @include mobile {
+          display: none;
+        }
         input {
           outline: none;
           padding: 3px 10px;
@@ -47,6 +60,10 @@
         font-weight: bold;
         color: var(--nav-link-color);
         font-size: 20px;
+
+        @include mobile {
+          display: none;
+        }
       }
     }
 

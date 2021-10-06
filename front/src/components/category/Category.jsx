@@ -3,6 +3,7 @@ import "./category.scss";
 export default function Category() {
   return (
     <section className="category">
+      <h1>Collections</h1>
       <div className="wrapper">
         <div className="infos">
           <img

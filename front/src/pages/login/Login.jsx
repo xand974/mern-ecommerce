@@ -20,6 +20,7 @@ export default function Login() {
           </button>
         </form>
         <Link to="/register">
+          Vous n'avez pas de compte ?{" "}
           <span className="create__account__text">Créer un compte</span>
         </Link>
       </div>

@@ -14,3 +14,15 @@ a {
   text-decoration: none;
   color: inherit;
 }
+
+@mixin tablet {
+  @media screen and (max-width: 910px) {
+    @content;
+  }
+}
+
+@mixin mobile {
+  @media screen and (max-width: 375px) {
+    @content;
+  }
+}

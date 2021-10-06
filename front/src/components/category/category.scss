@@ -1,7 +1,19 @@
+@import "../../app.scss";
 .category {
   height: max-content;
   width: 80%;
   margin: auto;
+
+  h1 {
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 40px;
+  }
+
+  @include mobile {
+    width: 100%;
+    margin: 0;
+  }
 
   .wrapper {
     height: 100%;
@@ -13,6 +25,9 @@
       flex-grow: 1;
       margin: 5px;
       position: relative;
+      @include mobile {
+        margin: 10px 0;
+      }
       img {
         height: 100%;
         width: 100%;
@@ -32,6 +47,11 @@
         h4 {
           font-size: 3rem;
           border-bottom: 1px solid black;
+
+          @include mobile {
+            font-size: 2rem;
+            text-align: center;
+          }
         }
         span {
           text-align: center;
@@ -45,6 +65,10 @@
           border: 1px solid black;
           cursor: pointer;
           transition: all 0.3s ease-in-out;
+          @include mobile {
+            font-size: 15px;
+            padding: 5px;
+          }
 
           &:hover {
             background: black;

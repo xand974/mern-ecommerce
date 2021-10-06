@@ -1,8 +1,13 @@
+@import "../../app.scss";
 .slider {
   height: 100vh;
   width: 80%;
   margin: auto;
   overflow: hidden;
+  @include mobile {
+    width: 100%;
+    margin-bottom: 10px;
+  }
 
   .wrapper {
     height: 100%;
@@ -16,6 +21,9 @@
       border-radius: 50%;
       box-shadow: 0 0 8px rgba(255, 255, 255, 0.534);
       cursor: pointer;
+      @include mobile {
+        font-size: 40px;
+      }
       &.left {
         top: 50%;
         left: 20px;
@@ -42,6 +50,9 @@
           height: 100%;
           object-fit: cover;
           border-radius: 10px;
+          @include mobile {
+            width: 100vw;
+          }
         }
 
         .container__infos {
@@ -50,17 +61,28 @@
           right: 10%;
           display: flex;
           flex-direction: column;
+          @include mobile {
+            left: 50%;
+            right: 0;
+            transform: translate(-50%, -50%);
+          }
 
           h3 {
             font-size: 3.5rem;
             color: white;
             letter-spacing: 3px;
+            @include mobile {
+              font-size: 2rem;
+            }
           }
           p {
             margin: 20px 0;
             font-size: 2rem;
             color: white;
             font-weight: lighter;
+            @include mobile {
+              font-size: 1rem;
+            }
           }
           button {
             width: 50%;
@@ -70,6 +92,10 @@
             border-radius: 10px;
             border: none;
             cursor: pointer;
+            @include mobile {
+              font-size: 1rem;
+              width: 100%;
+            }
           }
         }
       }

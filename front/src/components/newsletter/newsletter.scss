@@ -1,3 +1,4 @@
+@import "../../app.scss";
 .newsletter {
   width: 80%;
   margin: 20px auto;
@@ -12,6 +13,9 @@
     top: 50%;
     left: 30%;
     transform: translate(-50%, -50%);
+    @include mobile {
+      left: 50%;
+    }
   }
 
   .wrapper {
@@ -25,6 +29,11 @@
       font-size: 1.6rem;
       margin-bottom: 20px;
       letter-spacing: 3px;
+
+      @include mobile {
+        font-size: 1.3rem;
+        text-align: center;
+      }
     }
     p {
       margin-bottom: 20px;
@@ -32,11 +41,18 @@
       font-size: 1rem;
       font-weight: lighter;
       letter-spacing: 3px;
+      @include mobile {
+        text-align: center;
+      }
     }
     form {
       width: 40vw;
 
       display: flex;
+
+      @include mobile {
+        width: 100%;
+      }
       input {
         flex: 1;
         padding: 5px;
@@ -47,6 +63,9 @@
         border: none;
         border-top-left-radius: 10px;
         border-bottom-left-radius: 10px;
+        @include mobile {
+          font-size: 0.8rem;
+        }
       }
       button {
         padding: 10px;
@@ -61,7 +80,9 @@
         border-top-right-radius: 10px;
         border-bottom-right-radius: 10px;
         transition: all 0.3s ease-in-out;
-
+        @include mobile {
+          font-size: 0.8rem;
+        }
         &:hover {
           background: white;
           color: black;

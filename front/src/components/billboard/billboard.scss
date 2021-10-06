@@ -1,9 +1,15 @@
+@import "../../app.scss";
 .billboard {
   height: calc(100vh - 89px);
   width: 80%;
   margin: auto;
   position: relative;
   margin-top: 20px;
+
+  @include mobile {
+    width: 100%;
+    margin: 0;
+  }
 
   .billboard__bg {
     border-radius: 10px;
@@ -13,6 +19,9 @@
     object-fit: cover;
     filter: grayscale(1);
     transition: all 0.3s ease-in-out;
+    @include mobile {
+      border-radius: 0;
+    }
 
     &:hover {
       filter: grayscale(0);
@@ -30,20 +39,35 @@
       padding: 10px 20px;
       cursor: pointer;
     }
+
+    @include mobile {
+      top: 10%;
+    }
   }
   .billboard__infos {
     position: absolute;
     right: 10%;
     top: 50%;
+    @include mobile {
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
     h2 {
       font-size: 30px;
       font-weight: bold;
       margin: 10px 0;
+      @include mobile {
+        font-size: 40px;
+      }
     }
     p {
       margin: 10px 0;
       font-size: 25px;
       font-weight: bold;
+      @include mobile {
+        font-size: 20px;
+      }
     }
   }
 }

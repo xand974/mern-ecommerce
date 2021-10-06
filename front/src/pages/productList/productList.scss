@@ -1,14 +1,28 @@
+@import "../../app.scss";
 .product__list {
   width: 80%;
   margin: auto;
+  @include mobile {
+    width: 100%;
+    margin: 0;
+  }
   .title {
     display: flex;
     align-items: center;
+    @include mobile {
+      flex-direction: column;
+    }
     form {
       flex: 1;
       display: flex;
       align-items: center;
       justify-content: center;
+
+      .left {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+      }
 
       select {
         padding: 10px;
@@ -17,8 +31,14 @@
     }
     h1 {
       flex: 4;
-      margin: 20px 0;
+
       letter-spacing: 3px;
+
+      text-align: center;
+      @include mobile {
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+      }
     }
   }
   .cards {
@@ -27,6 +47,10 @@
     .card {
       width: calc(50% - 60px);
       margin: 20px;
+      @include mobile {
+        width: 100%;
+        margin: 20px;
+      }
       img {
         width: 100%;
         height: 100%;

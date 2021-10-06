@@ -52,11 +52,14 @@
         cursor: pointer;
       }
     }
-    .create__account__text {
+    a {
       font-size: 15px;
-      color: var(--gray);
-      border-bottom: 1px solid var(--gray);
-      cursor: pointer;
+
+      .create__account__text {
+        color: var(--gray);
+        border-bottom: 1px solid var(--gray);
+        cursor: pointer;
+      }
     }
   }
 

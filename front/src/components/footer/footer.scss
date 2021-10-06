@@ -1,3 +1,4 @@
+@import "../../app.scss";
 .footer {
   padding: 20px 40px 0 40px;
   width: 80%;
@@ -10,12 +11,23 @@
   background: white;
 
   display: flex;
+  @include mobile {
+    flex-direction: column;
+    width: 100%;
+    margin: 40px 0 0 0;
+  }
   h3 {
     font-size: 25px;
     margin-bottom: 10px;
+    @include mobile {
+      font-size: 1rem;
+    }
   }
   .left {
     flex: 2;
+    @include mobile {
+      display: none;
+    }
     p {
       width: 70%;
       font-size: 15px;
@@ -34,18 +46,26 @@
   }
   .middle {
     flex: 2;
+    @include mobile {
+      flex: 1;
+    }
     .links__container {
       display: flex;
       flex-direction: column;
       flex-wrap: wrap;
       height: 50%;
+      @include mobile {
+        height: 10rem;
+      }
 
       span {
         margin-bottom: 5px;
         cursor: pointer;
         color: var(--gray);
         transition: all 0.3s ease;
-
+        @include mobile {
+          font-size: 0.8rem;
+        }
         &:hover {
           color: var(--dark-gray);
           border-bottom: 1px solid var(--dark-gray);
@@ -54,13 +74,20 @@
     }
   }
   .right {
+    @include mobile {
+      display: none;
+    }
     .contact__container {
       display: flex;
       flex-direction: column;
+      @include mobile {
+        display: none;
+      }
       span {
         display: flex;
         align-items: center;
         margin-bottom: 10px;
+
         .icon {
           margin-right: 10px;
         }
