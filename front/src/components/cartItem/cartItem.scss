@@ -1,12 +1,21 @@
+@import "../../app.scss";
 .cart__item {
   display: flex;
   border-bottom: 1px solid var(--light-gray);
+
   .cart__item__img {
     flex: 1;
+    @include mobile {
+      flex: 2;
+    }
+
     img {
       width: 15vw;
       height: 25vh;
       object-fit: cover;
+      @include mobile {
+        width: 100%;
+      }
     }
   }
   .cart__item__infos {
@@ -19,6 +28,9 @@
       .info__title {
         font-weight: bold;
         margin-right: 5px;
+        @include mobile {
+          font-size: 1rem;
+        }
       }
     }
   }
@@ -28,6 +40,7 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    margin-right: 10px;
     .quantity {
       display: flex;
       align-items: center;
@@ -44,12 +57,18 @@
         border: 1px solid rgb(95, 72, 158);
         border-radius: 5px;
         padding: 5px 20px;
+        @include mobile {
+          font-size: 1rem;
+        }
       }
     }
     .price__text {
       margin-top: 10px;
       font-size: 30px;
       font-weight: lighter;
+      @include mobile {
+        font-size: 1.5rem;
+      }
     }
   }
 }

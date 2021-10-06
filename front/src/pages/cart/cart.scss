@@ -1,12 +1,30 @@
+@import "../../app.scss";
 .cart {
   width: 80%;
   margin: auto;
   height: max-content;
   padding: 20px 0;
 
+  @include mobile {
+    width: 100%;
+    margin: 0;
+  }
+
   h1 {
     font-size: 40px;
     text-align: center;
+  }
+  .payment__btn {
+    padding: 5px 10px;
+    font-size: 17px;
+    background: black;
+    color: white;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    &.second {
+      border-radius: 10px;
+    }
   }
   .cart__links {
     display: flex;
@@ -21,6 +39,9 @@
       padding: 5px;
       font-weight: bold;
       cursor: pointer;
+      @include mobile {
+        font-size: 1rem;
+      }
     }
     .cart__links__wrapper {
       display: flex;
@@ -32,19 +53,13 @@
         cursor: pointer;
       }
     }
-    .payment__btn {
-      padding: 5px 10px;
-      font-size: 17px;
-      background: black;
-      color: white;
-      font-weight: bold;
-      border: none;
-      cursor: pointer;
-    }
   }
   .container {
     margin-top: 40px;
     display: flex;
+    @include mobile {
+      flex-direction: column;
+    }
 
     .items {
       flex: 2;
@@ -56,6 +71,38 @@
       border: 1px solid var(--light-gray);
       padding: 10px;
       height: 50vh;
+
+      h4 {
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+      }
+      .checkout__container {
+        height: calc(100% - 4rem);
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+        .checkout__container__content {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          @include mobile {
+            margin-bottom: 10px;
+          }
+          .checkout__container__content__bold {
+            font-weight: 500;
+          }
+          .checkout__container__content__light {
+            font-weight: lighter;
+            &.price__text {
+              font-size: 30px;
+              font-weight: bold;
+              @include mobile {
+                font-size: 1.8rem;
+              }
+            }
+          }
+        }
+      }
     }
   }
 }
