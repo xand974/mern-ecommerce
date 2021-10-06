@@ -2,5 +2,5 @@ $config = /config
 $controllers = /controllers
 $middlewares = /middlewares
 $models = /models
-$routers = /routers
+$routes = /routes
 $helpers = /helpers
