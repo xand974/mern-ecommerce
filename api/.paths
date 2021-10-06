@@ -1,4 +1,4 @@
-$db = /config
+$config = /config
 $controllers = /controllers
 $middlewares = /middlewares
 $models = /models

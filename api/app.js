@@ -1,8 +1,9 @@
 require("dotenv").config();
 require("sexy-require");
+require("$config/db");
 const express = require("express");
 const app = express();
-const port = 3000 || process.env.PORT;
+const port = 3001 || process.env.PORT;
 const cors = require("cors");
 const helmet = require("helmet");
 const morgan = require("morgan");
