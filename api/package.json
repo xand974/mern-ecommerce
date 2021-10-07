@@ -21,6 +21,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.0.8",
     "morgan": "^1.10.0",
-    "sexy-require": "^1.1.2"
+    "sexy-require": "^1.1.2",
+    "stripe": "^8.178.0"
   }
 }

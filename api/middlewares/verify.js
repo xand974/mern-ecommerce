@@ -20,7 +20,7 @@ module.exports = {
       return res.status(401).json("you are not allowed to do this");
     }
   },
-  verifyUserAndIsAdmin: (req, res, next) => {
+  verifyUserOrIsAdmin: (req, res, next) => {
     if (req.user._id === req.params.id || req.user.isAdmin) {
       next();
     } else {
