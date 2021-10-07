@@ -1,9 +1,21 @@
 const Product = require("$models/product");
-const { verifyIsAdmin } = require("../middlewares/verify");
+const { verifyIsAdmin, verifyToken } = require("../middlewares/verify");
 const router = require("express").Router();
 
+//create product
+router.post("/add", verifyToken, async (req, res) => {
+  try {
+    const newProduct = new Product(req.body);
+    await newProduct.save();
+
+    return res.status(200).json(newProduct);
+  } catch (err) {
+    return res.status(500).json(err);
+  }
+});
+
 //get product
-router.get("/one/:id", async (req, res) => {
+router.get("/one/:id", verifyToken, async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
     !product && res.status(404).json("product not found");
@@ -14,7 +26,7 @@ router.get("/one/:id", async (req, res) => {
 });
 
 //get all products
-router.get("/all", verifyIsAdmin, async (req, res) => {
+router.get("/all", [verifyToken, verifyIsAdmin], async (req, res) => {
   try {
     const products = await Product.find({});
     return res.status(200).json(products);
@@ -24,7 +36,7 @@ router.get("/all", verifyIsAdmin, async (req, res) => {
 });
 
 //get product stats
-router.get("/stats", verifyIsAdmin, async (req, res) => {
+router.get("/stats", [verifyToken, verifyIsAdmin], async (req, res) => {
   try {
   } catch (err) {
     return res.status(500).json(err);
@@ -32,7 +44,7 @@ router.get("/stats", verifyIsAdmin, async (req, res) => {
 });
 
 //update product
-router.put("/:id", verifyIsAdmin, async (req, res) => {
+router.put("/:id", [verifyToken, verifyIsAdmin], async (req, res) => {
   try {
     const updatedProduct = await Product.findByIdAndUpdate(
       req.params.id,
@@ -46,7 +58,7 @@ router.put("/:id", verifyIsAdmin, async (req, res) => {
 });
 
 //delete product
-router.delete("/:id", verifyIsAdmin, async (req, res) => {
+router.delete("/:id", [verifyToken, verifyIsAdmin], async (req, res) => {
   try {
     await Product.findByIdAndDelete(req.params.id);
     return res.status(200).json("product has been deleted");

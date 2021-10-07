@@ -1,9 +1,23 @@
 const Cart = require("$models/cart");
-const { verifyIsAdmin, verifyUserOrIsAdmin } = require("../middlewares/verify");
+const {
+  verifyIsAdmin,
+  verifyUserOrIsAdmin,
+  verifyToken,
+} = require("../middlewares/verify");
 const router = require("express").Router();
 
+//create
+router.post("/add", [verifyToken], async (req, res) => {
+  try {
+    const newCart = new Cart(req.body);
+    await newCart.save();
+    return res.status(200).json(newCart);
+  } catch (err) {
+    return res.status(500).json(err);
+  }
+});
 //get cart
-router.get("/one/:id", verifyUserOrIsAdmin, async (req, res) => {
+router.get("/one/:id", [verifyToken, verifyUserOrIsAdmin], async (req, res) => {
   try {
     const cart = await Cart.findById(req.params.id);
     !cart && res.status(404).json("cart not found");
@@ -13,7 +27,7 @@ router.get("/one/:id", verifyUserOrIsAdmin, async (req, res) => {
 });
 
 //get all carts
-router.get("/all", verifyIsAdmin, async (req, res) => {
+router.get("/all", [verifyToken, verifyIsAdmin], async (req, res) => {
   try {
     const carts = await Order.find({});
     return res.status(200).json(carts);
@@ -23,15 +37,21 @@ router.get("/all", verifyIsAdmin, async (req, res) => {
 });
 
 //get cart stats
-router.get("/stats", verifyIsAdmin, async (req, res) => {
+router.get("/stats", [verifyToken, verifyIsAdmin], async (req, res) => {
   try {
+    const stats = Cart.aggregate([
+      {
+        $project: { year: { $year: "$createdAt" } },
+        $group: { _id: year, total: { $sum: 1 } },
+      },
+    ]);
   } catch (err) {
     return res.status(500).json(err);
   }
 });
 
 //update cart
-router.put("/:id", verifyUserOrIsAdmin, async (req, res) => {
+router.put("/:id", [verifyToken, verifyUserOrIsAdmin], async (req, res) => {
   try {
     const updatedCart = await Cart.findByIdAndUpdate(
       req.params.id,
@@ -45,7 +65,7 @@ router.put("/:id", verifyUserOrIsAdmin, async (req, res) => {
 });
 
 //delete cart
-router.delete("/:id", verifyUserOrIsAdmin, async (req, res) => {
+router.delete("/:id", [verifyToken, verifyUserOrIsAdmin], async (req, res) => {
   try {
     await Cart.findByIdAndDelete(req.params.id);
     return res.status(200).json("cart has been deleted");

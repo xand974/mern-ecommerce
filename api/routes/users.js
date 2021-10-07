@@ -1,20 +1,26 @@
 const User = require("$models/user");
-const { verifyIsAdmin, verifyUserOrIsAdmin } = require("../middlewares/verify");
+const {
+  verifyIsAdmin,
+  verifyUserOrIsAdmin,
+  verifyToken,
+} = require("../middlewares/verify");
+const bcrypt = require("bcrypt");
 const router = require("express").Router();
 
 //get user
-router.get("/one/:id", async (req, res) => {
+router.get("/one/:id", verifyToken, async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
     !user && res.status(404).json("user not found");
-    return res.status(200).json(user);
+    const { password, ...rest } = user._doc;
+    return res.status(200).json(rest);
   } catch (err) {
     return res.status(500).json(err);
   }
 });
 
 //get all user
-router.get("/all", verifyIsAdmin, async (req, res) => {
+router.get("/all", [verifyToken, verifyIsAdmin], async (req, res) => {
   try {
     const users = await User.find({});
     return res.status(200).json(users);
@@ -24,7 +30,7 @@ router.get("/all", verifyIsAdmin, async (req, res) => {
 });
 
 //get user stats
-router.get("/stats", verifyIsAdmin, async (req, res) => {
+router.get("/stats", [verifyToken, verifyIsAdmin], async (req, res) => {
   try {
     const stats = await User.aggregate([
       { $project: { month: { $month: "$createdAt" } } },
@@ -37,8 +43,13 @@ router.get("/stats", verifyIsAdmin, async (req, res) => {
 });
 
 //update user
-router.put("/:id", verifyUserOrIsAdmin, async (req, res) => {
+router.put("/:id", [verifyToken, verifyUserOrIsAdmin], async (req, res) => {
+  const { password } = req.body;
   try {
+    if (password) {
+      const NEW_SALT = await bcrypt.genSalt(10);
+      req.body.password = await bcrypt.hash(req.body.password, NEW_SALT);
+    }
     const updatedUser = await User.findByIdAndUpdate(
       req.params.id,
       { $set: req.body },
@@ -51,7 +62,7 @@ router.put("/:id", verifyUserOrIsAdmin, async (req, res) => {
 });
 
 //delete user
-router.delete("/:id", verifyUserOrIsAdmin, async (req, res) => {
+router.delete("/:id", [verifyToken, verifyUserOrIsAdmin], async (req, res) => {
   try {
     await User.findByIdAndDelete(req.params.id);
     return res.status(200).json("user has been deleted");
