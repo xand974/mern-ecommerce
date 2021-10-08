@@ -8,9 +8,9 @@ const bcrypt = require("bcrypt");
 const router = require("express").Router();
 
 //get user
-router.get("/one/:id", verifyToken, async (req, res) => {
+router.get("/one/:id", [verifyToken, verifyIsAdmin], async (req, res) => {
   try {
-    const user = await User.findById(req.params.id);
+    const user = User.findById(req.params.id);
     !user && res.status(404).json("user not found");
     const { password, ...rest } = user._doc;
     return res.status(200).json(rest);
@@ -21,8 +21,11 @@ router.get("/one/:id", verifyToken, async (req, res) => {
 
 //get all user
 router.get("/all", [verifyToken, verifyIsAdmin], async (req, res) => {
+  const query = req.query.new;
   try {
-    const users = await User.find({});
+    const users = query
+      ? await User.find({}).sort({ _id: -1 }).limit(5)
+      : await User.find({});
     return res.status(200).json(users);
   } catch (err) {
     return res.status(500).json(err);

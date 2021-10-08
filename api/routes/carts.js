@@ -16,7 +16,7 @@ router.post("/add", [verifyToken], async (req, res) => {
     return res.status(500).json(err);
   }
 });
-//get cart
+//get user cart
 router.get("/one/:id", [verifyToken, verifyUserOrIsAdmin], async (req, res) => {
   try {
     const cart = await Cart.findById(req.params.id);
