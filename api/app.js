@@ -12,6 +12,7 @@ const userRoutes = require("./routes/users");
 const orderRoutes = require("./routes/orders");
 const productRoutes = require("./routes/products");
 const cartRoutes = require("./routes/carts");
+const stripeRoutes = require("./routes/stripe");
 
 app.use(cors());
 app.use(helmet());
@@ -23,5 +24,6 @@ app.use("/api/v1/users", userRoutes);
 app.use("/api/v1/orders", orderRoutes);
 app.use("/api/v1/products", productRoutes);
 app.use("/api/v1/carts", cartRoutes);
+app.use("/api/v1/stripe", stripeRoutes);
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
