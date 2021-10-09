@@ -21,12 +21,14 @@ const productSchema = new Schema(
       required: true,
     },
     color: {
-      type: String,
+      type: Array,
       required: true,
+      default: [],
     },
     size: {
-      type: String,
+      type: Array,
       required: true,
+      default: [],
     },
     quantity: {
       type: Number,
@@ -34,6 +36,10 @@ const productSchema = new Schema(
     },
     categories: {
       type: Array,
+    },
+    inStock: {
+      type: Boolean,
+      default: false,
     },
   },
   { timestamps: true }
