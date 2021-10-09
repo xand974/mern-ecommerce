@@ -30,7 +30,7 @@ export const cartData = [
     id: 1837876779,
     name: "NIKE SNEAKER CAVIAR",
     color: "black",
-    size: "37,5",
+    size: "38",
     quantity: 1,
     price: 120,
     img: "https://images.unsplash.com/photo-1491553895911-0055eca6402d?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=880&q=80",
@@ -39,7 +39,7 @@ export const cartData = [
     id: 88967896568,
     name: "NIKE SNEAKER RED BLOOD",
     color: "red",
-    size: "40,5",
+    size: "40",
     quantity: 3,
     price: 430,
     img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80",
@@ -56,8 +56,8 @@ export const cartData = [
   {
     id: 8756756,
     name: "VANS OLD SCHOOL BORDEAUX",
-    color: "#5e0000",
-    size: "42,5",
+    color: "red",
+    size: "42",
     quantity: 2,
     price: 70,
     img: "https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=698&q=80",
@@ -79,5 +79,27 @@ export const cartData = [
     quantity: 8,
     price: 790,
     img: "https://images.unsplash.com/photo-1539185441755-769473a23570?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1471&q=80",
+  },
+];
+
+export const collectionData = [
+  {
+    id: 548646846,
+    title: "For The Woman",
+    img: "https://images.unsplash.com/photo-1600328759671-85927887458d?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=387&q=80",
+    cat: "woman",
+  },
+  {
+    id: 4548468,
+    title: "For The Men",
+    img: "https://images.unsplash.com/photo-1571945153237-4929e783af4a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=387&q=80",
+    cat: "man",
+  },
+
+  {
+    id: 456486748674,
+    title: "White Style",
+    img: "https://images.unsplash.com/photo-1508427953056-b00b8d78ebf5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
+    cat: "white",
   },
 ];

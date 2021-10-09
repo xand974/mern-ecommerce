@@ -1,5 +1,6 @@
 import "./carousel.scss";
 import Card from "components/card/Card";
+import { cartData } from "mockData";
 
 export default function Carousel() {
   return (
@@ -10,11 +11,9 @@ export default function Carousel() {
           <li>commander</li>
         </div>
         <div className="right">
-          <Card isAnimated={true} />
-          <Card isAnimated={true} />
-          <Card isAnimated={true} />
-          <Card isAnimated={true} />
-          <Card isAnimated={true} />
+          {cartData.map((card, key) => {
+            return <Card key={key} item={card} isAnimated={true} />;
+          })}
         </div>
       </div>
     </div>

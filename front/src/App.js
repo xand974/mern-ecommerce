@@ -9,44 +9,48 @@ import Login from "pages/login/Login";
 import Register from "pages/register/Register";
 import NotFound from "pages/notFound/NotFound";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { Redirect } from "react-router";
 
 export default function App() {
+  const user = true;
   return (
     <Router>
       <div className="App">
         <Route path="/login" exact>
-          <Login />
+          {user ? <Redirect to="/" /> : <Login />}
         </Route>
         <Route path="/register" exact>
-          <Register />
+          {user ? <Redirect to="/" /> : <Register />}
         </Route>
-        <>
-          <Navbar />
-          <Switch>
-            <Route path="/" exact>
-              <Home />
-            </Route>
-            <Route path="/all" exact>
-              <ProductList
-                categoryTitle="TOUS LES PRODUITS"
-                printCategory={true}
-              />
-            </Route>
-            <Route path="/category" exact>
-              <ProductList printCategory={true} />
-            </Route>
-            <Route path="/product" exact>
-              <Product />
-            </Route>
-            <Route path="/cart" exact>
-              <Cart />
-            </Route>
-            <Route path="*">
-              <NotFound />
-            </Route>
-          </Switch>
-          <Footer />
-        </>
+        {user && (
+          <>
+            <Navbar />
+            <Switch>
+              <Route path="/" exact>
+                <Home />
+              </Route>
+              <Route path="/products" exact>
+                <ProductList
+                  categoryTitle="TOUS LES PRODUITS"
+                  printCategory={true}
+                />
+              </Route>
+              <Route path="/products/:category" exact>
+                <ProductList printCategory={true} />
+              </Route>
+              <Route path="/product/:id" exact>
+                <Product />
+              </Route>
+              <Route path="/cart" exact>
+                <Cart />
+              </Route>
+              <Route path="*">
+                <NotFound />
+              </Route>
+            </Switch>
+            <Footer />
+          </>
+        )}
       </div>
     </Router>
   );

@@ -21,7 +21,7 @@ export default function Navbar() {
           <Link to="/category">
             <li>Collections</li>
           </Link>
-          <Link to="/all">
+          <Link to="/products">
             <li>Tous les articles</li>
           </Link>
         </ul>
