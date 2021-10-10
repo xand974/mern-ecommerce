@@ -14,7 +14,7 @@ export default function ProductList({ printCategory, categoryTitle }) {
   const { products } = useSelector((state) => state.products);
 
   const [sort, setSort] = useState("new");
-  const [filteredProducts, setFilteredProducts] = useState();
+  const [filteredProducts, setFilteredProducts] = useState([]);
 
   const handleSortChange = (e) => {
     setSort(e.target.value);
@@ -25,14 +25,19 @@ export default function ProductList({ printCategory, categoryTitle }) {
   }, [CATEGORY_NAME, dispatch]);
 
   useEffect(() => {
-    setFilteredProducts(() => {
-      products.filter((item) => {
-        Object.entries(filters).every(([key, value]) => {
-          console.log(item[key].includes(value));
+    CATEGORY_NAME &&
+      setFilteredProducts(() => {
+        products.filter((item) => {
+          Object.entries(filters).every(([key, value]) => {
+            return item[key].includes(value);
+          });
         });
       });
-    });
-  }, [products, filters]);
+  }, [products, filters, CATEGORY_NAME]);
+
+  useEffect(() => {
+    //sort - new , croissant , décroissant
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -94,7 +99,7 @@ export default function ProductList({ printCategory, categoryTitle }) {
         )}
       </div>
       <div className="cards">
-        {filters
+        {CATEGORY_NAME
           ? filteredProducts.map((filteredProduct) => (
               <Card key={filteredProduct._id} item={filteredProduct} />
             ))
