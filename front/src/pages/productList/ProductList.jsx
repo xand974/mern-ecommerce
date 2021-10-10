@@ -13,8 +13,6 @@ export default function ProductList({ printCategory, categoryTitle }) {
   const [filters, setFilters] = useState({});
   const { products } = useSelector((state) => state.products);
 
-  console.log(products);
-
   const [sort, setSort] = useState("new");
   const [filteredProducts, setFilteredProducts] = useState();
 
@@ -27,14 +25,14 @@ export default function ProductList({ printCategory, categoryTitle }) {
   }, [CATEGORY_NAME, dispatch]);
 
   useEffect(() => {
-    setFilteredProducts((prev) => {
-      products.filter((item) =>
-        Object.entries(item).every(([key, value]) => {
-          console.log(key);
-        })
-      );
+    setFilteredProducts(() => {
+      products.filter((item) => {
+        Object.entries(filters).every(([key, value]) => {
+          console.log(item[key].includes(value));
+        });
+      });
     });
-  }, [products, CATEGORY_NAME]);
+  }, [products, filters]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -96,9 +94,13 @@ export default function ProductList({ printCategory, categoryTitle }) {
         )}
       </div>
       <div className="cards">
-        {products.map((product) => {
-          return <Card key={product._id} item={product} />;
-        })}
+        {filters
+          ? filteredProducts.map((filteredProduct) => (
+              <Card key={filteredProduct._id} item={filteredProduct} />
+            ))
+          : products.map((product) => {
+              return <Card key={product._id} item={product} />;
+            })}
       </div>
     </div>
   );
