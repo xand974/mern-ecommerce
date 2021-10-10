@@ -1,22 +1,40 @@
 import Card from "components/card/Card";
-import { cartData } from "mockData";
 import { useState } from "react";
 import { useLocation } from "react-router";
 import "./productList.scss";
-import api from "api";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchProducts } from "redux/apiCall";
 
 export default function ProductList({ printCategory, categoryTitle }) {
   const location = useLocation();
   const CATEGORY_NAME = location.pathname.split("/")[2];
-  console.log(CATEGORY_NAME);
-  const [filters, setFilters] = useState({ color: "", size: "" });
+  const dispatch = useDispatch();
+  const [filters, setFilters] = useState({});
+  const { products } = useSelector((state) => state.products);
+
+  console.log(products);
 
   const [sort, setSort] = useState("new");
-  const [products, setProducts] = useState(cartData);
+  const [filteredProducts, setFilteredProducts] = useState();
 
   const handleSortChange = (e) => {
     setSort(e.target.value);
   };
+
+  useEffect(() => {
+    fetchProducts(CATEGORY_NAME, dispatch);
+  }, [CATEGORY_NAME, dispatch]);
+
+  useEffect(() => {
+    setFilteredProducts((prev) => {
+      products.filter((item) =>
+        Object.entries(item).every(([key, value]) => {
+          console.log(key);
+        })
+      );
+    });
+  }, [products, CATEGORY_NAME]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -78,17 +96,9 @@ export default function ProductList({ printCategory, categoryTitle }) {
         )}
       </div>
       <div className="cards">
-        {products
-          .filter((c) => {
-            if (filters.color === "" && filters.size === "") {
-              return c;
-            } else {
-              return c.color === filters.color && c.size === filters.size;
-            }
-          })
-          .map((item, key) => {
-            return <Card item={item} isAnimated={false} key={key} />;
-          })}
+        {products.map((product) => {
+          return <Card key={product._id} item={product} />;
+        })}
       </div>
     </div>
   );

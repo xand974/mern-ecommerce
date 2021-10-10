@@ -9,7 +9,7 @@ import "./card.scss";
 export default function Card({ isAnimated, item }) {
   return (
     <div className={`card ${isAnimated && "active"}`}>
-      <Link to={`/product/${item.id}`}>
+      <Link to={`/product/${item._id}`}>
         <img
           src={item.img}
           alt=""
