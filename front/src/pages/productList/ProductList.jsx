@@ -35,8 +35,6 @@ export default function ProductList({ printCategory, categoryTitle }) {
       });
   }, [products, filters, CATEGORY_NAME]);
 
-  console.log("prod", filteredProducts);
-
   useEffect(() => {
     if (sort === "new") {
     }
