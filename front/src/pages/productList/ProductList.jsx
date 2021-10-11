@@ -27,17 +27,20 @@ export default function ProductList({ printCategory, categoryTitle }) {
   useEffect(() => {
     CATEGORY_NAME &&
       setFilteredProducts(() => {
-        products.filter((item) => {
-          Object.entries(filters).every(([key, value]) => {
+        return products.filter((item) => {
+          return Object.entries(filters).every(([key, value]) => {
             return item[key].includes(value);
           });
         });
       });
   }, [products, filters, CATEGORY_NAME]);
 
+  console.log("prod", filteredProducts);
+
   useEffect(() => {
-    //sort - new , croissant , décroissant
-  }, []);
+    if (sort === "new") {
+    }
+  }, [sort, products]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -91,6 +94,7 @@ export default function ProductList({ printCategory, categoryTitle }) {
         {printCategory && (
           <form action="">
             <select onChange={handleSortChange} name="sort" id="">
+              <option value="">Select Sort</option>
               <option value="new">Newest</option>
               <option value="croissant">Prix croissant</option>
               <option value="decroissant">Prix décroissant</option>
@@ -103,9 +107,9 @@ export default function ProductList({ printCategory, categoryTitle }) {
           ? filteredProducts.map((filteredProduct) => (
               <Card key={filteredProduct._id} item={filteredProduct} />
             ))
-          : products.map((product) => {
-              return <Card key={product._id} item={product} />;
-            })}
+          : products.map((product) => (
+              <Card key={product._id} item={product} />
+            ))}
       </div>
     </div>
   );

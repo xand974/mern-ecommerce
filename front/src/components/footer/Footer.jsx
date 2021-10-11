@@ -28,7 +28,7 @@ export default function Footer() {
         </div>
       </div>
       <div className="middle">
-        <h3>Usefull Links</h3>
+        <h3>Useful Links</h3>
         <div className="links__container">
           <span>Home</span>
           <span>Tous les produits</span>
