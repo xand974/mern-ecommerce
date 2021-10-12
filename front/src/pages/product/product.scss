@@ -62,9 +62,10 @@
         }
       }
       .cart__container {
-        width: 60%;
+        width: 100%;
         display: flex;
         justify-content: space-between;
+        align-items: center;
         .quantity {
           display: flex;
           align-items: center;
@@ -82,6 +83,10 @@
             border-radius: 5px;
             padding: 5px 20px;
           }
+        }
+        .alert__quantity {
+          font-size: 1rem;
+          font-weight: bold;
         }
         button {
           font-size: 17px;

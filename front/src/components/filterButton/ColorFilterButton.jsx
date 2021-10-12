@@ -1,7 +1,13 @@
 import "./colorFilterButton.scss";
 
-const ColorFilterButton = ({ color }) => {
-  return <div className="color" style={{ backgroundColor: color }}></div>;
+const ColorFilterButton = ({ color, onClick }) => {
+  return (
+    <div
+      className="color"
+      onClick={onClick}
+      style={{ backgroundColor: color }}
+    ></div>
+  );
 };
 
 export default ColorFilterButton;

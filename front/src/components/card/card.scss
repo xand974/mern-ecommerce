@@ -45,7 +45,7 @@
   }
 
   &.active {
-    animation: carousel 45s ease-in-out infinite;
+    animation: carousel 45s ease-in-out infinite alternate;
 
     @keyframes carousel {
       to {

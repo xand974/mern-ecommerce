@@ -1,8 +1,11 @@
 import "./carousel.scss";
 import Card from "components/card/Card";
 import { cartData } from "mockData";
+import { useSelector } from "react-redux";
 
 export default function Carousel() {
+  const { products } = useSelector((state) => state.products);
+
   return (
     <div className="carousel">
       <div className="wrapper">
@@ -11,8 +14,8 @@ export default function Carousel() {
           <li>commander</li>
         </div>
         <div className="right">
-          {cartData.map((card, key) => {
-            return <Card key={key} item={card} isAnimated={true} />;
+          {products.map((product, key) => {
+            return <Card key={key} item={product} isAnimated={true} />;
           })}
         </div>
       </div>
