@@ -3,10 +3,16 @@ import {
   SearchOutlined,
   ShoppingBagOutlined,
 } from "@mui/icons-material";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import "./navbar.scss";
 
 export default function Navbar() {
+  const { active, quantity } = useSelector((state) => state.carts);
+  console.log(active, quantity);
+
+  useEffect(() => {}, []);
   return (
     <header className="navbar">
       <nav>
@@ -27,7 +33,16 @@ export default function Navbar() {
         </ul>
         <div className="navbar__account">
           <Link to="/cart">
-            <ShoppingBagOutlined className="icon bag" />
+            <div className="navbar__account--shopping">
+              <ShoppingBagOutlined className="icon bag" />
+              <span
+                className={`navbar__acount--shopping-count ${
+                  active && "active"
+                }`}
+              >
+                {quantity}
+              </span>
+            </div>
           </Link>
           <Link to="/user">
             <AccountCircleOutlined className="icon" />

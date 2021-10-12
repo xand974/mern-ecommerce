@@ -1,14 +1,18 @@
 import CartItem from "components/cartItem/CartItem";
-import { cartData } from "mockData";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import "./cart.scss";
 
 export default function Cart() {
+  const { products, total } = useSelector((state) => state.carts);
+
   return (
     <div className="cart">
       <h1>Mon Panier</h1>
       <div className="cart__links">
-        <span className="cart__links__text">Continuez Vos Achats</span>
-
+        <Link to="/">
+          <span className="cart__links__text">Continuez Vos Achats</span>
+        </Link>
         <div className="cart__links__wrapper">
           <span>Panier d'Achats</span>
           <span>Ma Liste De Souhait(2)</span>
@@ -17,8 +21,8 @@ export default function Cart() {
       </div>
       <div className="container">
         <div className="items">
-          {cartData.map((data) => {
-            return <CartItem key={data.id} item={data} />;
+          {products.map((data) => {
+            return <CartItem key={data._id} item={data} />;
           })}
         </div>
         <div className="checkout">
@@ -28,7 +32,9 @@ export default function Cart() {
               <span className="checkout__container__content__bold">
                 Subtotal:
               </span>
-              <span className="checkout__container__content__light">$ 80</span>
+              <span className="checkout__container__content__light">
+                ${total}
+              </span>
             </div>
             <div className="checkout__container__content">
               <span className="checkout__container__content__bold">
@@ -49,7 +55,7 @@ export default function Cart() {
             <div className="checkout__container__content">
               <span className="checkout__container__content__bold">TOTAL</span>
               <span className="checkout__container__content__light price__text">
-                30$
+                {total}$
               </span>
             </div>
             <button className="payment__btn second">Passer Au Paiement</button>

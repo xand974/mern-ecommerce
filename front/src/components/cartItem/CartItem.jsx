@@ -14,7 +14,7 @@ export default function CartItem({ item }) {
         </div>
         <div className="info">
           <span className="info__title">ID:</span>
-          <span>{item.id}</span>
+          <span>{item._id}</span>
         </div>
         <div className="info">
           <ColorFilterButton color={item.color} />

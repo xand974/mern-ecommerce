@@ -4,8 +4,11 @@ import { useLocation } from "react-router";
 import { useState } from "react";
 import { useEffect } from "react";
 import { publicRequest } from "api";
+import { addProduct } from "redux/cartSlice";
+import { useDispatch } from "react-redux";
 
 export default function Product() {
+  const dispatch = useDispatch();
   const location = useLocation();
   const PRODUCT_ID = location.pathname.split("/")[2];
   const [product, setProduct] = useState({});
@@ -27,6 +30,10 @@ export default function Product() {
     };
     fetchProduct();
   }, [PRODUCT_ID]);
+
+  const handleClick = () => {
+    dispatch(addProduct({ ...product, quantity, size, color }));
+  };
 
   return (
     <div className="product">
@@ -80,7 +87,7 @@ export default function Product() {
             <div className="alert__quantity">
               {product.quantity - quantity} encore en stock !
             </div>
-            <button>Ajouter au panier</button>
+            <button onClick={handleClick}>Ajouter au panier</button>
           </div>
         </div>
       </div>

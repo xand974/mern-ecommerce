@@ -18,7 +18,9 @@ export default function Card({ isAnimated, item }) {
       </Link>
       <div className="option">
         <FavoriteBorder className="icon" />
-        <ShoppingBagOutlined className="icon" />
+        <Link to={`/product/${item._id}`}>
+          <ShoppingBagOutlined className="icon" />
+        </Link>
         <ShareOutlined className="icon" />
       </div>
     </div>
