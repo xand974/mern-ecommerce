@@ -1,6 +1,7 @@
 .card {
   position: relative;
   cursor: pointer;
+  flex-grow: 1;
   img {
     height: 100%;
     object-fit: cover;

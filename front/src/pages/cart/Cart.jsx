@@ -1,6 +1,7 @@
 import CartItem from "components/cartItem/CartItem";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import StripeCheckout from "react-stripe-checkout";
 import "./cart.scss";
 
 export default function Cart() {
@@ -58,7 +59,11 @@ export default function Cart() {
                 {total}$
               </span>
             </div>
-            <button className="payment__btn second">Passer Au Paiement</button>
+            <StripeCheckout>
+              <button className="payment__btn second">
+                Passer Au Paiement
+              </button>
+            </StripeCheckout>
           </div>
         </div>
       </div>
