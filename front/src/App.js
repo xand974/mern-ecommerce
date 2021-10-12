@@ -10,6 +10,7 @@ import Register from "pages/register/Register";
 import NotFound from "pages/notFound/NotFound";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Redirect } from "react-router";
+import Bravo from "pages/bravo/Bravo";
 
 export default function App() {
   const user = true;
@@ -43,6 +44,9 @@ export default function App() {
               </Route>
               <Route path="/cart" exact>
                 <Cart />
+              </Route>
+              <Route path="/bravo" exact>
+                <Bravo />
               </Route>
               <Route path="*">
                 <NotFound />

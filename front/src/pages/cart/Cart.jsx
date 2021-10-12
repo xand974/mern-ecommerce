@@ -1,11 +1,34 @@
+import { publicRequest } from "api";
 import CartItem from "components/cartItem/CartItem";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import StripeCheckout from "react-stripe-checkout";
 import "./cart.scss";
+import { useHistory } from "react-router";
 
 export default function Cart() {
   const { products, total } = useSelector((state) => state.carts);
+  const [stripeToken, setStripeToken] = useState(null);
+  const history = useHistory();
+  useEffect(() => {
+    const sendToken = async () => {
+      try {
+        const res = await publicRequest.post("/stripe/payment", {
+          tokenId: stripeToken.id,
+          amount: total * 100,
+        });
+        history.push("/bravo", { res: res.data });
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    stripeToken && total >= 1 && sendToken();
+  }, [stripeToken, total, history]);
+
+  const onToken = (token) => {
+    setStripeToken(token);
+  };
 
   return (
     <div className="cart">
@@ -59,7 +82,16 @@ export default function Cart() {
                 {total}$
               </span>
             </div>
-            <StripeCheckout>
+            <StripeCheckout
+              name="Malet Shop"
+              image="../../img/LOGO_HEET_SANSFOND.png"
+              billingAddress
+              shippingAddress
+              description
+              amount={total * 100}
+              stripeKey={process.env.REACT_APP_STRIPE_SECRET}
+              token={onToken}
+            >
               <button className="payment__btn second">
                 Passer Au Paiement
               </button>
