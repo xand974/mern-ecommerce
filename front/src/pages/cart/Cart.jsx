@@ -1,16 +1,19 @@
 import { publicRequest } from "api";
 import CartItem from "components/cartItem/CartItem";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import StripeCheckout from "react-stripe-checkout";
 import "./cart.scss";
 import { useHistory } from "react-router";
+import { resetCart } from "redux/cartSlice";
 
 export default function Cart() {
   const { products, total } = useSelector((state) => state.carts);
   const [stripeToken, setStripeToken] = useState(null);
+  const dispatch = useDispatch();
   const history = useHistory();
+
   useEffect(() => {
     const sendToken = async () => {
       try {
@@ -18,13 +21,14 @@ export default function Cart() {
           tokenId: stripeToken.id,
           amount: total * 100,
         });
+        dispatch(resetCart());
         history.push("/bravo", { res: res.data });
       } catch (err) {
         console.log(err);
       }
     };
     stripeToken && total >= 1 && sendToken();
-  }, [stripeToken, total, history]);
+  }, [stripeToken, total, history, dispatch]);
 
   const onToken = (token) => {
     setStripeToken(token);
@@ -84,7 +88,7 @@ export default function Cart() {
             </div>
             <StripeCheckout
               name="Malet Shop"
-              image="../../img/LOGO_HEET_SANSFOND.png"
+              image="https://raw.githubusercontent.com/xand974/mern-ecommerce/master/front/src/img/LOGO_HEET_SANSFOND.png"
               billingAddress
               shippingAddress
               description

@@ -1,6 +1,5 @@
 import "./carousel.scss";
 import Card from "components/card/Card";
-import { cartData } from "mockData";
 import { useSelector } from "react-redux";
 
 export default function Carousel() {

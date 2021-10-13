@@ -10,7 +10,6 @@ import "./navbar.scss";
 
 export default function Navbar() {
   const { active, quantity } = useSelector((state) => state.carts);
-  console.log(active, quantity);
 
   useEffect(() => {}, []);
   return (

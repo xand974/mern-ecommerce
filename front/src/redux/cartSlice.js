@@ -16,9 +16,15 @@ export const cartSlice = createSlice({
       state.total += action.payload.price * action.payload.quantity;
       state.active = true;
     },
-    //supprimer produit
+    //reset cart
+    resetCart: (state) => {
+      state.active = false;
+      state.products = [];
+      state.total = 0;
+      state.quantity = 0;
+    },
   },
 });
 
 export default cartSlice.reducer;
-export const { addProduct } = cartSlice.actions;
+export const { addProduct, resetCart } = cartSlice.actions;

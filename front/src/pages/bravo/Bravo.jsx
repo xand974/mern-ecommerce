@@ -3,6 +3,7 @@ import "./bravo.scss";
 
 export default function Bravo() {
   const location = useLocation();
-  console.log(location);
+  const res = location.state.res;
+  console.log(res);
   return <div className="bravo">bravo</div>;
 }
