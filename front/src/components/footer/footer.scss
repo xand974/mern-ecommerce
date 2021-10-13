@@ -64,7 +64,7 @@
         color: var(--gray);
         transition: all 0.3s ease;
         @include mobile {
-          font-size: 0.8rem;
+          font-size: 1rem;
         }
         &:hover {
           color: var(--dark-gray);

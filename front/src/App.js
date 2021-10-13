@@ -11,19 +11,20 @@ import NotFound from "pages/notFound/NotFound";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Redirect } from "react-router";
 import Bravo from "pages/bravo/Bravo";
+import { useSelector } from "react-redux";
 
 export default function App() {
-  const user = true;
+  const { currentUser } = useSelector((state) => state.user);
   return (
     <Router>
       <div className="App">
         <Route path="/login" exact>
-          {user ? <Redirect to="/" /> : <Login />}
+          {currentUser ? <Redirect to="/" /> : <Login />}
         </Route>
         <Route path="/register" exact>
-          {user ? <Redirect to="/" /> : <Register />}
+          {currentUser ? <Redirect to="/" /> : <Register />}
         </Route>
-        {user && (
+        {currentUser ? (
           <>
             <Navbar />
             <Switch>
@@ -54,6 +55,8 @@ export default function App() {
             </Switch>
             <Footer />
           </>
+        ) : (
+          <Redirect to="/login" />
         )}
       </div>
     </Router>

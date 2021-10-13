@@ -1,8 +1,19 @@
 import "./register.scss";
 import { CreateOutlined } from "@mui/icons-material";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import { useState } from "react";
+import { register } from "redux/apiCall";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function Register() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const { error } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const handleClick = () => {
+    register({ username, password }, dispatch, history);
+  };
   return (
     <div className="register">
       <img
@@ -11,14 +22,25 @@ export default function Register() {
       />
       <div className="container">
         <h1>S'ENREGISTRER</h1>
-        <form>
-          <label htmlFor="email">EMAIL</label>
-          <input type="text" id="email" placeholder="john@gmail.com" />
+        <form onSubmit={(e) => e.preventDefault()}>
+          <label htmlFor="email">USERNAME</label>
+          <input
+            onChange={(e) => setUsername(e.target.value)}
+            type="text"
+            id="username"
+            placeholder="john000"
+          />
           <label htmlFor="password">PASSWORD</label>
-          <input type="text" placeholder="abc123?." id="password" />
-          <button>
+          <input
+            onChange={(e) => setPassword(e.target.value)}
+            type="password"
+            placeholder="abc123?."
+            id="password"
+          />
+          <button onClick={handleClick}>
             <CreateOutlined />
           </button>
+          {error && <span style={{ color: "red" }}>Something happened</span>}
         </form>
         <Link to="/login">
           <span className="create__account__text">Se connecter</span>

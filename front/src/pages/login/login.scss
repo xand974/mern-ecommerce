@@ -34,6 +34,7 @@
         border: none;
         border-bottom: 1px solid black;
       }
+
       button {
         width: 50%;
         margin: auto;
@@ -50,6 +51,15 @@
         border-radius: 5px;
 
         cursor: pointer;
+        .loop {
+          animation: turn 2s infinite linear;
+
+          @keyframes turn {
+            to {
+              transform: rotate(-360deg);
+            }
+          }
+        }
       }
     }
     a {
