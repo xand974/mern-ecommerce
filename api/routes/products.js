@@ -26,7 +26,7 @@ router.get("/one/:id", async (req, res) => {
 });
 
 //get all products
-router.get("/all", [verifyToken, verifyIsAdmin], async (req, res) => {
+router.get("/all", async (req, res) => {
   const queryNew = req.query.new;
   const queryCategory = req.query.category;
   let products;
