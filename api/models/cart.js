@@ -12,6 +12,7 @@ const cartSchema = new Schema(
       { productId: { type: String, required: true } },
       { quantity: { type: Number, default: 1 } },
     ],
+    totalQuantity: { type: Number },
   },
   { timestamps: true }
 );
