@@ -25,6 +25,10 @@
     &.second {
       border-radius: 10px;
     }
+    &.disabled {
+      background: gray;
+      cursor: none;
+    }
   }
   .cart__links {
     display: flex;

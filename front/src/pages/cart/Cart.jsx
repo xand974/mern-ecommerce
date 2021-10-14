@@ -7,14 +7,23 @@ import StripeCheckout from "react-stripe-checkout";
 import "./cart.scss";
 import { useHistory } from "react-router";
 import { resetCart } from "redux/cartSlice";
+import { sendCart } from "redux/apiCall";
+import { filterCartProducts } from "helpers/filterProducts";
 
 export default function Cart() {
-  const { products, total } = useSelector((state) => state.carts);
+  const { products, total, quantity } = useSelector((state) => state.carts);
+  const { currentUser } = useSelector((state) => state.user);
   const [stripeToken, setStripeToken] = useState(null);
   const dispatch = useDispatch();
   const history = useHistory();
+  const cartProducts = filterCartProducts(products);
 
   useEffect(() => {
+    const cart = {
+      userId: currentUser.user._id,
+      products: cartProducts,
+      totalQuantity: quantity,
+    };
     const sendToken = async () => {
       try {
         const res = await publicRequest.post("/stripe/payment", {
@@ -22,13 +31,22 @@ export default function Cart() {
           amount: total * 100,
         });
         dispatch(resetCart());
+        sendCart(cart, dispatch);
         history.push("/bravo", { res: res.data });
       } catch (err) {
         console.log(err);
       }
     };
     stripeToken && total >= 1 && sendToken();
-  }, [stripeToken, total, history, dispatch]);
+  }, [
+    stripeToken,
+    total,
+    history,
+    dispatch,
+    currentUser,
+    quantity,
+    cartProducts,
+  ]);
 
   const onToken = (token) => {
     setStripeToken(token);
@@ -42,7 +60,6 @@ export default function Cart() {
           <span className="cart__links__text">Continuez Vos Achats</span>
         </Link>
         <div className="cart__links__wrapper">
-          <span>Panier d'Achats</span>
           <span>Ma Liste De Souhait(2)</span>
         </div>
         <button className="payment__btn">Passer Au Paiement</button>
@@ -86,17 +103,22 @@ export default function Cart() {
                 {total}$
               </span>
             </div>
+
             <StripeCheckout
               name="Malet Shop"
               image="https://raw.githubusercontent.com/xand974/mern-ecommerce/master/front/src/img/LOGO_HEET_SANSFOND.png"
               billingAddress
               shippingAddress
-              description
+              description="Une histoire en trois temps"
               amount={total * 100}
               stripeKey={process.env.REACT_APP_STRIPE_SECRET}
               token={onToken}
             >
-              <button className="payment__btn second">
+              <button
+                className={`payment__btn second ${
+                  products.length === 0 ? "disabled" : ""
+                }`}
+              >
                 Passer Au Paiement
               </button>
             </StripeCheckout>

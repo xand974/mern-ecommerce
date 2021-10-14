@@ -7,6 +7,8 @@ export const cartSlice = createSlice({
     quantity: 0,
     total: 0,
     active: false,
+    pending: false,
+    error: false,
   },
   reducers: {
     //ajouter produit
@@ -23,8 +25,27 @@ export const cartSlice = createSlice({
       state.total = 0;
       state.quantity = 0;
     },
+    sendCartStart: (state) => {
+      state.pending = true;
+    },
+    sendCartSuccess: (state) => {
+      state.pending = false;
+      state.products = [];
+      state.quantity = 0;
+      state.total = 0;
+    },
+    sendCartError: (state) => {
+      state.pending = false;
+      state.error = true;
+    },
   },
 });
 
 export default cartSlice.reducer;
-export const { addProduct, resetCart } = cartSlice.actions;
+export const {
+  addProduct,
+  resetCart,
+  sendCartStart,
+  sendCartSuccess,
+  sendCartError,
+} = cartSlice.actions;

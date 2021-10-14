@@ -3,7 +3,7 @@ import {
   fetchProductsSuccess,
   fetchProductsFailure,
 } from "./productSlice";
-import { publicRequest } from "api";
+import { privateRequest, publicRequest } from "api";
 import {
   loginFailure,
   loginStart,
@@ -11,6 +11,7 @@ import {
   registerStart,
   registerSuccess,
 } from "./userSlice";
+import { sendCartError, sendCartStart, sendCartSuccess } from "./cartSlice";
 
 export const fetchProducts = async (cat, dispatch) => {
   dispatch(fetchProductsStart());
@@ -42,5 +43,15 @@ export const register = async (user, dispatch, history) => {
     history.push("/login");
   } catch (err) {
     dispatch(loginFailure());
+  }
+};
+
+export const sendCart = async (cart, dispatch) => {
+  dispatch(sendCartStart());
+  try {
+    await privateRequest.post("/carts/add", cart);
+    dispatch(sendCartSuccess());
+  } catch (err) {
+    dispatch(sendCartError());
   }
 };
