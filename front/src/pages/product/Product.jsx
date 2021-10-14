@@ -33,6 +33,7 @@ export default function Product() {
 
   const handleClick = () => {
     dispatch(addProduct({ ...product, quantity, size, color }));
+    window.scrollTo(0, 0);
   };
 
   return (
@@ -61,6 +62,7 @@ export default function Product() {
             <form>
               <label htmlFor="size">Size</label>
               <select
+                required={true}
                 name="size"
                 id="size"
                 onChange={(e) => setSize(e.target.value)}

@@ -1,0 +1,12 @@
+.not__found {
+  height: calc(100vh - 389px);
+  &--title {
+    text-align: center;
+    font-size: 70px;
+    margin-bottom: 20px;
+  }
+  &--body {
+    text-align: center;
+    font-size: 40px;
+  }
+}

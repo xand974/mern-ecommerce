@@ -7,7 +7,6 @@ export default function Slider() {
   var [slideIndex, setSlideIndex] = useState(0);
   const sliderContainer = useRef();
   const handleSliderClick = (direction) => {
-    // console.log(slideIndex);
     if (direction === "left") {
       setSlideIndex(slideIndex > 0 ? slideIndex - 1 : slideItems.length - 1);
       sliderContainer.current.style.transform = `translateX( ${

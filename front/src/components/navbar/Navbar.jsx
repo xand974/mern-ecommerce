@@ -36,7 +36,7 @@ export default function Navbar() {
               <ShoppingBagOutlined className="icon bag" />
               <span
                 className={`navbar__acount--shopping-count ${
-                  active && "active"
+                  active && quantity !== 0 && "active"
                 }`}
               >
                 {quantity}

@@ -18,6 +18,15 @@ export const cartSlice = createSlice({
       state.total += action.payload.price * action.payload.quantity;
       state.active = true;
     },
+    removeItem: (state, action) => {
+      state.products.filter((product) => product._id !== action.payload._id);
+      if (state.quantity === 0) {
+        state.quantity = 0;
+      } else {
+        state.quantity -= 1;
+      }
+      state.total -= action.payload.price * action.payload.quantity;
+    },
     //reset cart
     resetCart: (state) => {
       state.active = false;
@@ -48,4 +57,5 @@ export const {
   sendCartStart,
   sendCartSuccess,
   sendCartError,
+  removeItem,
 } = cartSlice.actions;
