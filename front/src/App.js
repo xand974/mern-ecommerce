@@ -12,6 +12,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Redirect } from "react-router";
 import Bravo from "pages/bravo/Bravo";
 import { useSelector } from "react-redux";
+import WishList from "pages/wishList/WishList";
 
 export default function App() {
   const { currentUser } = useSelector((state) => state.user);
@@ -48,6 +49,9 @@ export default function App() {
               </Route>
               <Route path="/bravo" exact>
                 <Bravo />
+              </Route>
+              <Route path="/wishlist" exact>
+                <WishList />
               </Route>
               <Route path="*">
                 <NotFound />

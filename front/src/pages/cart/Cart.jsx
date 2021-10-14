@@ -17,6 +17,7 @@ export default function Cart() {
   const dispatch = useDispatch();
   const history = useHistory();
   const cartProducts = filterCartProducts(products);
+  const { userWishList } = useSelector((state) => state.wishList);
 
   useEffect(() => {
     const cart = {
@@ -60,7 +61,9 @@ export default function Cart() {
           <span className="cart__links__text">Continuez Vos Achats</span>
         </Link>
         <div className="cart__links__wrapper">
-          <span>Ma Liste De Souhait(2)</span>
+          <Link to={{ pathname: "/wishlist", items: userWishList }}>
+            <span>Ma Liste De Souhait({userWishList.length})</span>
+          </Link>
         </div>
         <button className="payment__btn">Passer Au Paiement</button>
       </div>
