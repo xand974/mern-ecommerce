@@ -1,7 +1,11 @@
 import ColorFilterButton from "components/filterButton/ColorFilterButton";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { removeItem } from "redux/cartSlice";
+import {
+  removeItem,
+  calculateTotalMinus,
+  calculateTotalPlus,
+} from "redux/cartSlice";
 import "./cartItem.scss";
 
 export default function CartItem({ item }) {
@@ -11,14 +15,19 @@ export default function CartItem({ item }) {
 
   console.log(products.filter((product) => product._id !== item._id));
 
+  useEffect(() => {
+    if (quantity === 0) {
+      dispatch(removeItem({ _id: item._id }));
+    }
+  }, [quantity, item, dispatch]);
+
   const handleClick = (e) => {
     if (e.target.value === "plus") {
       setQuantity((prev) => (prev += 1));
+      dispatch(calculateTotalPlus({ price: item.price }));
     } else {
       setQuantity(quantity <= 0 ? 0 : (prev) => (prev -= 1));
-      if (quantity === 0) {
-        dispatch(removeItem({ _id: item._id, quantity, price: item.price }));
-      }
+      dispatch(calculateTotalMinus({ price: item.price }));
     }
   };
   return (
@@ -36,7 +45,11 @@ export default function CartItem({ item }) {
           <span>{item._id}</span>
         </div>
         <div className="info">
-          <ColorFilterButton color={item.color} />
+          {item.color === null ? (
+            "no color"
+          ) : (
+            <ColorFilterButton color={item.color} />
+          )}
         </div>
         <div className="info">
           <span className="info__title">Size:</span>

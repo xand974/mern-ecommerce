@@ -27,7 +27,7 @@
     }
     &.disabled {
       background: gray;
-      cursor: none;
+      pointer-events: none;
     }
   }
   .cart__links {
@@ -36,7 +36,7 @@
     align-items: center;
     margin-top: 20px;
 
-    .cart__links__text {
+    &__text {
       border: 2px solid black;
       background: none;
       font-size: 17px;
@@ -47,7 +47,7 @@
         font-size: 1rem;
       }
     }
-    .cart__links__wrapper {
+    &__wrapper {
       display: flex;
       align-items: center;
       span {
@@ -85,17 +85,17 @@
         display: flex;
         justify-content: space-between;
         flex-direction: column;
-        .checkout__container__content {
+        &__content {
           display: flex;
           justify-content: space-between;
           align-items: center;
           @include mobile {
             margin-bottom: 10px;
           }
-          .checkout__container__content__bold {
+          &__bold {
             font-weight: 500;
           }
-          .checkout__container__content__light {
+          &__light {
             font-weight: lighter;
             &.price__text {
               font-size: 30px;

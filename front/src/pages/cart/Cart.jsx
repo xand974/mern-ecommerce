@@ -107,24 +107,24 @@ export default function Cart() {
               </span>
             </div>
 
-            <StripeCheckout
-              name="Malet Shop"
-              image="https://raw.githubusercontent.com/xand974/mern-ecommerce/master/front/src/img/LOGO_HEET_SANSFOND.png"
-              billingAddress
-              shippingAddress
-              description="Une histoire en trois temps"
-              amount={total * 100}
-              stripeKey={process.env.REACT_APP_STRIPE_SECRET}
-              token={onToken}
+            <button
+              className={`payment__btn second ${
+                quantity < 1 ? "disabled" : ""
+              }`}
             >
-              <button
-                className={`payment__btn second ${
-                  products.length === 0 ? "disabled" : ""
-                }`}
+              <StripeCheckout
+                name="Malet Shop"
+                image="https://raw.githubusercontent.com/xand974/mern-ecommerce/master/front/src/img/LOGO_HEET_SANSFOND.png"
+                billingAddress
+                shippingAddress
+                description="Une histoire en trois temps"
+                amount={total * 100}
+                stripeKey={process.env.REACT_APP_STRIPE_SECRET}
+                token={onToken}
               >
                 Passer Au Paiement
-              </button>
-            </StripeCheckout>
+              </StripeCheckout>
+            </button>
           </div>
         </div>
       </div>
