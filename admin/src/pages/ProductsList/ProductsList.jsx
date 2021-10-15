@@ -1,17 +1,24 @@
 import { DeleteOutlined, EditOutlined } from "@material-ui/icons";
 import { DataGrid } from "@mui/x-data-grid";
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import "./productsList.scss";
-import { products } from "mockData";
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { fetchProducts } from "redux/apiCalls";
 
 export default function Products() {
-  const [data, setData] = useState(products);
+  const { products } = useSelector((state) => state.products);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    fetchProducts(dispatch);
+  }, [dispatch]);
+
   const HandleClick = (id) => {
-    setData((prev) => {
-      return prev.filter((m) => m.id !== id);
-    });
+    console.log("product has been deleted ");
   };
+
   const columns = [
     { field: "id", headerName: "ID", width: 100 },
     {
@@ -27,15 +34,38 @@ export default function Products() {
         );
       },
     },
-    { field: "stock", headerName: "Stock", type: "number", width: 130 },
+    { field: "description", headerName: "Description", width: 130 },
     {
-      field: "status",
-      headerName: "Status",
+      field: "color",
+      headerName: "Color",
       width: 160,
     },
     {
       field: "price",
       headername: "Price",
+      width: 160,
+    },
+    {
+      field: "size",
+      headername: "Size",
+      width: 160,
+      type: Array,
+    },
+    {
+      field: "quantity",
+      headername: "Quantity",
+      width: 160,
+      type: Number,
+    },
+    {
+      field: "categories",
+      headername: "Categories",
+      width: 160,
+      type: Array,
+    },
+    {
+      field: "inStock",
+      headername: "inStock",
       width: 160,
     },
     {
@@ -45,14 +75,19 @@ export default function Products() {
       renderCell: (params) => {
         return (
           <div className="productlist">
-            <Link to={`/product/${params.row.id}`}>
+            <Link
+              to={{
+                pathname: `/product/${params.row._id}`,
+                product: params.row,
+              }}
+            >
               <button>
                 <EditOutlined className="btn__edit" />
               </button>
             </Link>
             <button
               onClick={() => {
-                HandleClick(params.row.id);
+                HandleClick(params.row._id);
               }}
             >
               <DeleteOutlined className="btn__delete" />
@@ -65,12 +100,13 @@ export default function Products() {
   return (
     <div className="products">
       <DataGrid
-        rows={data}
+        rows={products}
         columns={columns}
-        pageSize={10}
-        rowsPerPageOptions={[5]}
+        pageSize={8}
+        rowsPerPageOptions={[2]}
         checkboxSelection
         disableSelectionOnClick
+        getRowId={(row) => row._id}
       />
     </div>
   );

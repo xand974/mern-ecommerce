@@ -1,0 +1,103 @@
+.log {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  background: #f1f1f1;
+  align-items: center;
+  .wrapper {
+    border-radius: 5px;
+    position: relative;
+    background: none;
+    box-shadow: 0 0 10px black;
+    width: 400px;
+    height: 320px;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    background: rgb(255, 255, 255);
+    .text {
+      text-align: center;
+    }
+    span {
+      font-size: 30px;
+      color: black;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      * {
+        margin: 20px 0;
+      }
+      input {
+        outline: none;
+        background: none;
+        border: none;
+        border-bottom: 1px dashed rgb(105, 105, 105);
+        font-size: 15px;
+        padding: 10px;
+        color: var(--light-purple);
+      }
+      ::placeholder {
+        font-size: 14px;
+        color: rgb(105, 105, 105);
+        padding: 10px;
+      }
+      .btn {
+        margin: auto;
+        width: 80%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        button {
+          background: black;
+          border: none;
+
+          width: 80%;
+          height: 50px;
+          margin: auto;
+          box-shadow: 0 0 10px black;
+          margin-top: 10px;
+          color: white;
+          border-radius: 10px;
+          font-weight: bold;
+          cursor: pointer;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          .loop {
+            animation: turn 1s linear infinite;
+            font-size: 29px;
+
+            @keyframes turn {
+              0% {
+                transform: rotate(0);
+              }
+              50% {
+                transform: rotate(-180deg);
+              }
+              100% {
+                transform: rotate(-360deg);
+              }
+            }
+          }
+        }
+      }
+    }
+    .error {
+      font-size: 15px;
+      color: red;
+      font-weight: bold;
+      text-align: center;
+      margin-top: 30px;
+      position: absolute;
+      bottom: -70px;
+      left: 50%;
+      transform: translate(-50%);
+      padding: 7px 5px;
+      border-radius: 6px;
+      opacity: 1;
+      transition: all 0.3s ease-in-out;
+    }
+  }
+}
