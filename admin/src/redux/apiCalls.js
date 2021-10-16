@@ -18,10 +18,12 @@ export const login = async (user, dispatch) => {
   }
 };
 
-export const fetchUsers = async (dispatch) => {
+export const fetchUsers = async (dispatch, newQuery) => {
   dispatch(fetchUsersStart());
   try {
-    const res = await adminRequest.get("/users/all");
+    const res = newQuery
+      ? await adminRequest.get("/users/all?new=true")
+      : await adminRequest.get("/users/all");
     dispatch(fetchUsersSuccess(res.data));
   } catch (err) {
     dispatch(fetchUsersError());

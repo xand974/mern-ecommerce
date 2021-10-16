@@ -20,7 +20,7 @@ export default function Products() {
   };
 
   const columns = [
-    { field: "id", headerName: "ID", width: 100 },
+    { field: "_id", headerName: "ID", width: 100 },
     {
       field: "name",
       headerName: "Name",
@@ -43,7 +43,7 @@ export default function Products() {
     {
       field: "price",
       headername: "Price",
-      width: 160,
+      width: 100,
     },
     {
       field: "size",
@@ -54,7 +54,7 @@ export default function Products() {
     {
       field: "quantity",
       headername: "Quantity",
-      width: 160,
+      width: 100,
       type: Number,
     },
     {
@@ -66,7 +66,7 @@ export default function Products() {
     {
       field: "inStock",
       headername: "inStock",
-      width: 160,
+      width: 100,
     },
     {
       field: "action",

@@ -16,7 +16,7 @@ export default function UserList() {
   };
 
   useEffect(() => {
-    fetchUsers(dispatch);
+    fetchUsers(dispatch, false);
   }, [dispatch]);
 
   const columns = [
