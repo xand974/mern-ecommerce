@@ -11,19 +11,32 @@ const userSchema = new Schema(
     },
     fullName: {
       type: String,
+      default: "",
     },
     email: {
       type: String,
       unique: true,
+      default: "",
     },
     address: {
       type: String,
+      default: "",
     },
     phone: {
       type: String,
+      default: "",
     },
     genre: {
       type: String,
+      default: "",
+    },
+    job: {
+      type: String,
+      default: "",
+    },
+    birth: {
+      type: String,
+      default: "",
     },
     password: {
       type: String,
