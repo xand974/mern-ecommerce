@@ -1,77 +1,66 @@
-.user {
+.product {
   flex: 4;
-  .title {
+  .container {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 100%;
-    h3 {
+    .title {
       font-size: 40px;
     }
     a {
       text-decoration: none;
-      margin-right: 50px;
-      span {
-        background-color: rgb(6, 0, 61);
-        padding: 10px 20px;
-        color: white;
-        font-size: 18px;
-        border: none;
-        border-radius: 5px;
+      color: white;
+      padding: 10px 30px;
+      background: rgb(24, 24, 104);
+      border-radius: 10px;
+      li {
+        list-style: none;
+        font-size: 20px;
       }
     }
   }
   .wrapper {
-    width: 100%;
     display: flex;
-    .profile {
-      margin-right: 50px;
+    .description {
       flex: 1;
+      margin-right: 20px;
       box-shadow: 0 0 20px rgba(0, 0, 0, 0.288);
-      height: 31rem;
-      overflow-y: hidden;
       padding: 20px;
-      .picture {
+      .img {
         display: flex;
         align-items: center;
+        margin-bottom: 30px;
         img {
-          width: 90px;
-          height: 90px;
+          width: 70px;
+          height: 70px;
+          border-radius: 50%;
           object-fit: cover;
           margin-right: 20px;
         }
-        .infos {
-          display: flex;
-          flex-direction: column;
-          span {
-            font-size: 20px;
-          }
-          :first-child {
-            font-weight: bold;
-          }
-          :last-child {
-            color: gray;
-          }
+        span {
+          font-weight: bold;
+          font-size: 25px;
         }
       }
-      .account {
-        margin-top: 30px;
-        display: flex;
-        flex-direction: column;
-        p {
-          color: rgb(175, 175, 175);
-          font-weight: bold;
-          margin: 15px 0;
-          font-size: 20px;
-        }
-        span {
+      .infos {
+        .item {
           display: flex;
           align-items: center;
-          font-size: 18px;
-          color: rgb(85, 85, 85);
-          margin-bottom: 20px;
-          .icon {
-            margin-right: 10px;
+          width: 100%;
+          justify-content: space-between;
+          margin-bottom: 10px;
+          .infoItem {
+            font-weight: bold;
+            margin-right: 30%;
+          }
+          .infoData {
+            color: gray;
+            &.synopsis {
+              text-align: right;
+            }
+            &.trailer {
+              overflow: scroll;
+            }
           }
         }
       }
@@ -80,8 +69,6 @@
       padding: 20px;
       height: 31rem;
       overflow-y: hidden;
-      max-height: 40rem;
-      margin-right: 50px;
       flex: 2;
       box-shadow: 0 0 20px rgba(0, 0, 0, 0.288);
       h3 {
@@ -126,6 +113,7 @@
           .img {
             display: flex;
             align-items: center;
+            flex-direction: column;
             img {
               width: 200px;
               height: 200px;
@@ -133,13 +121,8 @@
               object-fit: cover;
               margin-right: 20px;
             }
-            button {
-              background: none;
-              border: none;
-              .form__file {
-                display: none;
-              }
-              * {
+            .thumbnail {
+              .icon {
                 font-size: 40px;
                 cursor: pointer;
                 transition: all 0.1s ease-in-out;
@@ -147,6 +130,10 @@
                   color: crimson;
                 }
               }
+            }
+            input {
+              opacity: 0;
+              pointer-events: none;
             }
           }
           .btn__update {

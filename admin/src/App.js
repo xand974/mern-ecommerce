@@ -15,6 +15,7 @@ import ProductsList from "pages/ProductsList/ProductsList";
 import Login from "pages/Login/Login";
 import Register from "pages/Register/Register";
 import AddProduct from "pages/AddProduct/AddProduct";
+import Product from "pages/Product/Product";
 
 function App() {
   const admin = JSON.parse(
@@ -50,6 +51,9 @@ function App() {
                 </Route>
                 <Route path="/new/product" exact>
                   <AddProduct />
+                </Route>
+                <Route path="/product/:id" exact>
+                  <Product />
                 </Route>
               </div>
             </Switch>

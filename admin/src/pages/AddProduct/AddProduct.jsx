@@ -12,7 +12,7 @@ export default function AddProduct() {
 
   return (
     <div className="add">
-      <h3 className="title">New Movie</h3>
+      <h3 className="title">New Product</h3>
       <form onSubmit={(e) => e.preventDefault()}>
         <div className="data">
           <label htmlFor="bigPicture">Image</label>
@@ -24,7 +24,7 @@ export default function AddProduct() {
         </div>
         <div className="data">
           <label htmlFor="price">Price</label>
-          <input type="number" id="price" name="price" />
+          <input type="number" id="price" name="price" placeholder="35" />
         </div>
 
         <div className="data">
