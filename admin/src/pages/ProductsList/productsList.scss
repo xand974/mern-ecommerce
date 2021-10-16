@@ -1,5 +1,21 @@
 .products {
   flex: 4;
+  .container__title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    h3 {
+      font-size: 30px;
+    }
+    a {
+      text-decoration: none;
+      color: white;
+      padding: 10px 30px;
+      background: rgb(24, 24, 104);
+      border-radius: 10px;
+    }
+  }
   .renderProduct {
     display: flex;
     align-items: center;

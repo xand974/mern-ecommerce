@@ -69,6 +69,12 @@ export default function UserList() {
   ];
   return (
     <div className="userlist">
+      <div className="container__title">
+        <h3>Users</h3>
+        <Link to="/new/user">
+          <span>Create</span>
+        </Link>
+      </div>
       <DataGrid
         rows={users}
         columns={columns}

@@ -10,10 +10,12 @@ import {
   Redirect,
 } from "react-router-dom";
 import User from "pages/User/User";
-import Add from "pages/AddUser/Add";
+import AddUser from "pages/AddUser/AddUser";
 import ProductsList from "pages/ProductsList/ProductsList";
 import Login from "pages/Login/Login";
 import Register from "pages/Register/Register";
+import AddProduct from "pages/AddProduct/AddProduct";
+
 function App() {
   const admin = JSON.parse(
     JSON.parse(localStorage.getItem("persist:root")).auth
@@ -40,11 +42,14 @@ function App() {
                 <Route path="/user/:id" exact>
                   <User />
                 </Route>
-                <Route path="/add" exact>
-                  <Add />
+                <Route path="/new/user" exact>
+                  <AddUser />
                 </Route>
                 <Route path="/products" exact>
                   <ProductsList />
+                </Route>
+                <Route path="/new/product" exact>
+                  <AddProduct />
                 </Route>
               </div>
             </Switch>

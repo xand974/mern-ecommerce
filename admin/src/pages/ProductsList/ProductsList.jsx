@@ -99,6 +99,12 @@ export default function Products() {
   ];
   return (
     <div className="products">
+      <div className="container__title">
+        <h3>Products</h3>
+        <Link to="/new/product">
+          <span>Create</span>
+        </Link>
+      </div>
       <DataGrid
         rows={products}
         columns={columns}
