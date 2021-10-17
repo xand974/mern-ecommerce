@@ -1,6 +1,6 @@
 import ColorFilterButton from "components/filterButton/ColorFilterButton";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   removeItem,
   calculateTotalMinus,
@@ -11,9 +11,6 @@ import "./cartItem.scss";
 export default function CartItem({ item }) {
   const [quantity, setQuantity] = useState(item.quantity);
   const dispatch = useDispatch();
-  const { products } = useSelector((state) => state.carts);
-
-  console.log(products.filter((product) => product._id !== item._id));
 
   useEffect(() => {
     if (quantity === 0) {
@@ -30,6 +27,7 @@ export default function CartItem({ item }) {
       dispatch(calculateTotalMinus({ price: item.price }));
     }
   };
+
   return (
     <div className="cart__item">
       <div className="cart__item__img">

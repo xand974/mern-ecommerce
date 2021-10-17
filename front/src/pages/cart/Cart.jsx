@@ -19,6 +19,8 @@ export default function Cart() {
   const cartProducts = filterCartProducts(products);
   const { userWishList } = useSelector((state) => state.wishList);
 
+  console.log(products);
+
   useEffect(() => {
     const cart = {
       userId: currentUser.user._id,
@@ -31,9 +33,9 @@ export default function Cart() {
           tokenId: stripeToken.id,
           amount: total * 100,
         });
-        dispatch(resetCart());
         sendCart(cart, dispatch);
-        history.push("/bravo", { res: res.data });
+        dispatch(resetCart());
+        history.push("/bravo", { res: res.data, products: products });
       } catch (err) {
         console.log(err);
       }
@@ -47,6 +49,7 @@ export default function Cart() {
     currentUser,
     quantity,
     cartProducts,
+    products,
   ]);
 
   const onToken = (token) => {
