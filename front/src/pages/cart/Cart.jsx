@@ -19,12 +19,13 @@ export default function Cart() {
   const cartProducts = filterCartProducts(products);
   const { userWishList } = useSelector((state) => state.wishList);
 
-  console.log(products);
-
   useEffect(() => {
     const cart = {
       userId: currentUser.user._id,
-      products: cartProducts,
+      products: products.map((product) => ({
+        productId: product._id,
+        quantity: product.quantity,
+      })),
       totalQuantity: quantity,
     };
     const sendToken = async () => {
