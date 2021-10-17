@@ -55,3 +55,11 @@ export const sendCart = async (cart, dispatch) => {
     dispatch(sendCartError());
   }
 };
+
+export const sendOrder = async (order) => {
+  try {
+    await privateRequest.post("/orders/add", order);
+  } catch (err) {
+    console.log(err);
+  }
+};

@@ -4,13 +4,13 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router";
+import { sendOrder } from "redux/apiCall";
 import "./bravo.scss";
 
 export default function Bravo() {
   const location = useLocation();
   const res = location.state.res;
   const products = location.state.products;
-
   var [detailClicked, setDetailClicked] = useState(false);
   const { currentUser } = useSelector((state) => state.user);
   const { total } = useSelector((state) => state.carts);
@@ -26,15 +26,13 @@ export default function Bravo() {
       amount: res.amount / 100,
       address: res.billing_details.address,
     };
-    const sendOrder = async () => {
-      try {
-        await privateRequest.post("/orders/add", order);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    res && products && sendOrder();
+
+    res && products && sendOrder(order);
   }, [currentUser.user._id, res, products, total]);
+
+  useEffect(() => {
+    //fetch all orders of user
+  }, []);
 
   return (
     <div className="bravo">

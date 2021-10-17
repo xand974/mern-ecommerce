@@ -8,7 +8,6 @@ import "./cart.scss";
 import { useHistory } from "react-router";
 import { resetCart } from "redux/cartSlice";
 import { sendCart } from "redux/apiCall";
-import { filterCartProducts } from "helpers/filterProducts";
 
 export default function Cart() {
   const { products, total, quantity } = useSelector((state) => state.carts);
@@ -16,25 +15,26 @@ export default function Cart() {
   const [stripeToken, setStripeToken] = useState(null);
   const dispatch = useDispatch();
   const history = useHistory();
-  const cartProducts = filterCartProducts(products);
   const { userWishList } = useSelector((state) => state.wishList);
 
   useEffect(() => {
-    const cart = {
-      userId: currentUser.user._id,
-      products: products.map((product) => ({
-        productId: product._id,
-        quantity: product.quantity,
-      })),
-      totalQuantity: quantity,
-    };
     const sendToken = async () => {
       try {
         const res = await publicRequest.post("/stripe/payment", {
           tokenId: stripeToken.id,
           amount: total * 100,
         });
-        sendCart(cart, dispatch);
+        sendCart(
+          {
+            userId: currentUser.user._id,
+            products: products.map((product) => ({
+              productId: product._id,
+              quantity: product.quantity,
+            })),
+            totalQuantity: quantity,
+          },
+          dispatch
+        );
         dispatch(resetCart());
         history.push("/bravo", { res: res.data, products: products });
       } catch (err) {
@@ -42,16 +42,7 @@ export default function Cart() {
       }
     };
     stripeToken && total >= 1 && sendToken();
-  }, [
-    stripeToken,
-    total,
-    history,
-    dispatch,
-    currentUser,
-    quantity,
-    cartProducts,
-    products,
-  ]);
+  }, [stripeToken, total, history, dispatch, currentUser, quantity, products]);
 
   const onToken = (token) => {
     setStripeToken(token);
