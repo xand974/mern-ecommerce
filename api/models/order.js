@@ -12,8 +12,6 @@ const orderSchema = new Schema(
       { productId: { type: String, required: true } },
       { quantity: { type: Number, default: 1 } },
     ],
-    amount: { type: Number, required: true },
-    address: { type: Object, required: true },
     status: { type: String, required: true },
   },
   { timestamps: true }
