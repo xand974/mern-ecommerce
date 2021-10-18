@@ -13,7 +13,7 @@ export default function Login() {
 
   const { pending, error } = useSelector((state) => state.auth);
 
-  const HandleClick = async () => {
+  const HandleClick = () => {
     login({ username, password }, dispatch);
     history.push("/");
   };

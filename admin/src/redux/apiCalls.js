@@ -8,6 +8,11 @@ import {
   fetchUsersSuccess,
 } from "./userSlice";
 import { fetchProductsStart, fetchProductsSuccess } from "./productSlice";
+import {
+  fetchOrdersError,
+  fetchOrdersStart,
+  fetchOrdersSuccess,
+} from "./orderReducer";
 
 export const login = async (user, dispatch) => {
   dispatch(loginStart());
@@ -48,14 +53,28 @@ export const fetchUsersStats = async (dispatch, setUserStats, MONTHS) => {
     const statList = res.data.sort((a, b) => {
       return a._id - b._id;
     });
-    statList.map((stat) => {
-      return setUserStats((prev) => [
-        ...prev,
-        { name: MONTHS[stat._id - 1], Users: stat.total },
-      ]);
-    });
+
+    statList
+      .filter((s) => {
+        return s._id !== undefined || s._id !== MONTHS[s._id - 1];
+      })
+      .map((stat) => {
+        return setUserStats((prev) => {
+          return [...prev, { name: MONTHS[stat._id - 1], Users: stat.total }];
+        });
+      });
     dispatch(fetchUsersStatsSuccess(statList));
   } catch (err) {
     dispatch(fetchUsersStatsError());
+  }
+};
+
+export const fetchOrders = async (dispatch) => {
+  dispatch(fetchOrdersStart());
+  try {
+    const res = await adminRequest.get("/orders/all");
+    dispatch(fetchOrdersSuccess(res.data));
+  } catch (err) {
+    dispatch(fetchOrdersError());
   }
 };

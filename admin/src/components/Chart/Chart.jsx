@@ -18,7 +18,6 @@ export default function Chart({ grid }) {
   const { stats } = useSelector((state) => state.users);
   const dispatch = useDispatch();
   const [userStats, setUserStats] = useState(stats);
-  console.log(userStats);
   const MONTHS = useMemo(
     () => [
       "Jav",
@@ -40,12 +39,6 @@ export default function Chart({ grid }) {
   useEffect(() => {
     fetchUsersStats(dispatch, setUserStats, MONTHS);
   }, [dispatch, MONTHS]);
-
-  // userStats.map((stat) => {
-  //   return setUserStats((prev) => {
-  //     return [...prev, { name: MONTHS[stat._id - 1], Users: stat.total }];
-  //   });
-  // });
 
   return (
     <div className="chart">

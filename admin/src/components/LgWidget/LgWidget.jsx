@@ -1,9 +1,21 @@
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchOrders } from "redux/apiCalls";
 import "./lgWidget.scss";
 
 export default function LgWidget() {
   const Button = ({ type, text }) => {
     return <button className={"btn " + type}>{text}</button>;
   };
+  const dispatch = useDispatch();
+  const { orders } = useSelector((state) => state.orders);
+
+  console.log(orders);
+
+  useEffect(() => {
+    fetchOrders(dispatch);
+  }, [dispatch]);
+
   return (
     <div className="lgWidget">
       <h3 className="transaction__text">Lastest transactions</h3>
