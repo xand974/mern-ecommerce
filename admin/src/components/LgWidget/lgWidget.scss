@@ -36,7 +36,8 @@
             border: none;
             padding: 5px;
             border-radius: 5px;
-            &.approuved {
+            cursor: pointer;
+            &.confirmation {
               background-color: rgb(110, 255, 175);
               color: rgb(243, 255, 235);
             }

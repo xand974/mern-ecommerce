@@ -12,9 +12,19 @@ export default function Product() {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const HandleChange = (e) => {};
+  const HandleChange = (e) => {
+    const { value, name } = e.target;
+    setUserInput((prev) => {
+      return {
+        ...prev,
+        [name]: value,
+      };
+    });
+  };
 
-  const HandleClick = () => {};
+  const HandleClick = () => {
+    console.log(userInput, "product updated");
+  };
   return (
     <div className="product">
       <div className="container">

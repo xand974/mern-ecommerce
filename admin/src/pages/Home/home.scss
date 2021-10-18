@@ -1,7 +1,7 @@
 .home {
   flex: 4;
   height: 100%;
-
+  width: calc(100% - 200px);
   .widgets {
     margin-top: 20px;
     display: flex;

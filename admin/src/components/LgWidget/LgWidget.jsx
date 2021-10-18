@@ -2,15 +2,21 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchOrders } from "redux/apiCalls";
 import "./lgWidget.scss";
+import * as timeago from "timeago.js";
+import { Link } from "react-router-dom";
 
 export default function LgWidget() {
-  const Button = ({ type, text }) => {
-    return <button className={"btn " + type}>{text}</button>;
+  const Button = ({ type, text, id }) => {
+    return (
+      <Link to={`/order/${id}`}>
+        <button className={"btn " + type}>{text}</button>{" "}
+      </Link>
+    );
   };
   const dispatch = useDispatch();
   const { orders } = useSelector((state) => state.orders);
 
-  console.log(orders);
+  useEffect(() => {}, []);
 
   useEffect(() => {
     fetchOrders(dispatch);
@@ -29,60 +35,34 @@ export default function LgWidget() {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td className="tableProfile">
-              <img
-                src="https://www.charlesguene.fr/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png"
-                alt=""
-              />
-              <span>Malet Alexandre</span>
-            </td>
-            <td>
-              <span className="date">23 May 2021</span>
-            </td>
-            <td>
-              <span className="amount">$220</span>
-            </td>
-            <td>
-              <Button type="approuved" text="approuved" />
-            </td>
-          </tr>
-          <tr>
-            <td className="tableProfile">
-              <img
-                src="https://www.charlesguene.fr/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png"
-                alt=""
-              />
-              <span>Malet Alexandre</span>
-            </td>
-            <td>
-              <span className="date">23 May 2021</span>
-            </td>
-            <td>
-              <span className="amount">$220</span>
-            </td>
-            <td>
-              <Button type="pending" text="pending" />
-            </td>
-          </tr>
-          <tr>
-            <td className="tableProfile">
-              <img
-                src="https://www.charlesguene.fr/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png"
-                alt=""
-              />
-              <span>Malet Alexandre</span>
-            </td>
-            <td>
-              <span className="date">23 May 2021</span>
-            </td>
-            <td>
-              <span className="amount">$220</span>
-            </td>
-            <td>
-              <Button type="rejected" text="rejected" />
-            </td>
-          </tr>
+          {orders.map((order) => {
+            return (
+              <tr>
+                <td className="tableProfile">
+                  <img
+                    src="https://www.charlesguene.fr/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png"
+                    alt=""
+                  />
+                  <span>{order.userId}</span>
+                </td>
+                <td>
+                  <span className="date">
+                    {timeago.format(order.createdAt)}
+                  </span>
+                </td>
+                <td>
+                  <span className="amount">${order.amount}</span>
+                </td>
+                <td>
+                  <Button
+                    id={order._id}
+                    type={order.status}
+                    text={order.status}
+                  />
+                </td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </div>

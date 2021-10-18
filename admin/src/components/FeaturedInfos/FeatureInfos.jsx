@@ -1,11 +1,25 @@
 import "./featuredInfos.scss";
 import Card from "components/Card/Card";
+import { useEffect } from "react";
+import { adminRequest } from "api";
+import { useState } from "react";
 export default function FeatureInfos() {
+  const [revenus, setRevenus] = useState([]);
+  useEffect(() => {
+    const fetchRevenue = async () => {
+      try {
+        const res = await adminRequest.get("/orders/stats");
+        setRevenus(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchRevenue();
+  }, []);
+
   return (
     <div className="featuredInfos">
-      <Card price="20.84" />
-      <Card price="-15.3" />
-      <Card price="-3.35" />
+      <Card revenus={revenus} />
     </div>
   );
 }
