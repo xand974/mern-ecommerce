@@ -16,9 +16,11 @@ export default function Sidebar() {
     <div className="sidebar">
       <div className="dashboard">
         <p>Dashboard</p>
-        <span>
-          <HomeOutlined className="icon" /> Home
-        </span>
+        <Link to="/">
+          <span>
+            <HomeOutlined className="icon" /> Home
+          </span>
+        </Link>
         <span>
           <Timeline className="icon" /> Analyses
         </span>

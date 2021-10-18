@@ -35,7 +35,9 @@
         }
         .job {
           color: gray;
-          font-size: 14px;
+          font-size: 15px;
+          display: flex;
+          align-items: center;
         }
       }
       .infos__link {

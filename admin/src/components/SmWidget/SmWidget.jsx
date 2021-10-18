@@ -1,4 +1,4 @@
-import { Visibility } from "@material-ui/icons";
+import { Check, Close, Visibility } from "@material-ui/icons";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,7 +8,6 @@ import "./smWidget.scss";
 export default function SmWidget() {
   const dispatch = useDispatch();
   const { users } = useSelector((state) => state.users);
-  console.log(users);
 
   useEffect(() => {
     fetchUsers(dispatch, true);
@@ -30,7 +29,9 @@ export default function SmWidget() {
               />
               <div className="infos">
                 <span className="name">{user.username}</span>
-                <span className="job">admin : {user.isAdmin}</span>
+                <span className="job">
+                  admin : {user.isAdmin ? <Check /> : <Close />}
+                </span>
               </div>
               <Link to={{ pathname: "/user/:id", user: user }}>
                 <li className="infos__link">

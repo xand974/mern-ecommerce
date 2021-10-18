@@ -6,6 +6,7 @@ export const userSlice = createSlice({
     users: [],
     pending: false,
     error: false,
+    stats: [],
   },
   reducers: {
     fetchUsersStart: (state) => {
@@ -19,9 +20,26 @@ export const userSlice = createSlice({
       state.pending = false;
       state.error = true;
     },
+    fetchUsersStatsStart: (state) => {
+      state.pending = true;
+    },
+    fetchUsersStatsSuccess: (state, action) => {
+      state.pending = false;
+      state.stats = action.payload;
+    },
+    fetchUsersStatsError: (state) => {
+      state.pending = false;
+      state.error = true;
+    },
   },
 });
 
-export const { fetchUsersStart, fetchUsersError, fetchUsersSuccess } =
-  userSlice.actions;
+export const {
+  fetchUsersStart,
+  fetchUsersError,
+  fetchUsersSuccess,
+  fetchUsersStatsStart,
+  fetchUsersStatsSuccess,
+  fetchUsersStatsError,
+} = userSlice.actions;
 export default userSlice.reducer;
