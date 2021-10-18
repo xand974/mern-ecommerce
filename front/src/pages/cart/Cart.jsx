@@ -38,6 +38,7 @@ export default function Cart() {
         dispatch(resetCart());
         history.push("/bravo", { res: res.data, products: products });
       } catch (err) {
+        history.push("/error");
         console.log(err);
       }
     };
