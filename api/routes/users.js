@@ -1,4 +1,4 @@
-const User = require("$models/user");
+const User = require("../models/user");
 const {
   verifyIsAdmin,
   verifyUserOrIsAdmin,
@@ -10,7 +10,7 @@ const router = require("express").Router();
 //get user
 router.get("/one/:id", [verifyToken, verifyIsAdmin], async (req, res) => {
   try {
-    const user = User.findById(req.params.id);
+    const user = await User.findById(req.params.id);
     !user && res.status(404).json("user not found");
     const { password, ...rest } = user._doc;
     return res.status(200).json(rest);
