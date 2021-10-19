@@ -7,6 +7,20 @@ const {
 const bcrypt = require("bcrypt");
 const router = require("express").Router();
 
+//add user
+router.post("/add", [verifyToken, verifyIsAdmin], async (req, res) => {
+  try {
+    const user = await User.findOne({ username: req.body.username });
+    user && res.status(404).json("user exist");
+
+    const newUser = new User(req.body);
+    await newUser.save();
+    return res.status(200).json(newUser);
+  } catch (err) {
+    return res.status(500).json(err);
+  }
+});
+
 //get user
 router.get("/one/:id", [verifyToken, verifyIsAdmin], async (req, res) => {
   try {
