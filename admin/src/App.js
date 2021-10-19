@@ -24,14 +24,14 @@ function App() {
   return (
     <div className="app">
       <Router>
-        <Route path="/login">{admin ? <Redirect to="/" /> : <Login />}</Route>
-        <Route path="/register">
-          {admin ? <Redirect to="/" /> : <Register />}
-        </Route>
-        {admin ? (
-          <>
-            <Topbar />
-            <Switch>
+        <Switch>
+          <Route path="/login">{admin ? <Redirect to="/" /> : <Login />}</Route>
+          <Route path="/register">
+            {admin ? <Redirect to="/" /> : <Register />}
+          </Route>
+          {admin ? (
+            <>
+              <Topbar />
               <div className="wrapper">
                 <Sidebar />
                 <Route path="/" exact>
@@ -56,11 +56,11 @@ function App() {
                   <Product />
                 </Route>
               </div>
-            </Switch>
-          </>
-        ) : (
-          <Redirect to="/login" />
-        )}
+            </>
+          ) : (
+            <Redirect to="/login" />
+          )}
+        </Switch>
       </Router>
     </div>
   );

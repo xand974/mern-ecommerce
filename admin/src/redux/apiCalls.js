@@ -63,6 +63,7 @@ export const fetchUsersStats = async (dispatch, setUserStats, MONTHS) => {
           return [...prev, { name: MONTHS[stat._id - 1], Users: stat.total }];
         });
       });
+    console.log(statList);
     dispatch(fetchUsersStatsSuccess(statList));
   } catch (err) {
     dispatch(fetchUsersStatsError());
