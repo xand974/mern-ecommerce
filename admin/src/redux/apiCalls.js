@@ -10,7 +10,13 @@ import {
   fetchUsersStatsSuccess,
   fetchUsersSuccess,
 } from "./userSlice";
-import { fetchProductsStart, fetchProductsSuccess } from "./productSlice";
+import {
+  addProductError,
+  addProductStart,
+  addProductSuccess,
+  fetchProductsStart,
+  fetchProductsSuccess,
+} from "./productSlice";
 import {
   fetchOrdersError,
   fetchOrdersStart,
@@ -90,5 +96,15 @@ export const createUser = async (dispatch, user) => {
     dispatch(createUserSuccess(res.data));
   } catch (err) {
     dispatch(createUserError());
+  }
+};
+
+export const addProduct = async (dispatch, product) => {
+  dispatch(addProductStart());
+  try {
+    const res = await adminRequest.post("/products/add", product);
+    dispatch(addProductSuccess(res.data));
+  } catch (err) {
+    dispatch(addProductError());
   }
 };

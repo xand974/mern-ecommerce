@@ -2,12 +2,32 @@ import { useState } from "react";
 import "./addProduct.scss";
 import { useHistory } from "react-router";
 import { useDispatch } from "react-redux";
+import { addProduct } from "redux/apiCalls";
 
 export default function AddProduct() {
   const [uploaded, setUploaded] = useState();
+  const [userInput, setUserInput] = useState({});
+  const [color, setColor] = useState([]);
+  const [cat, setCat] = useState([]);
+  const [size, setSize] = useState([]);
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const [img, setImg] = useState("eza");
 
-  const HandleChange = () => {};
-  const HandleClick = () => {};
+  const handleChange = (e) => {
+    setUserInput((prev) => {
+      const { value, name } = e.target;
+      return {
+        ...prev,
+        [name]: value,
+      };
+    });
+  };
+
+  const HandleClick = () => {
+    addProduct(dispatch, { ...userInput, color, size, cat, img });
+    history.push("/products");
+  };
   const handleUpload = () => {};
 
   return (
@@ -16,56 +36,85 @@ export default function AddProduct() {
       <form onSubmit={(e) => e.preventDefault()}>
         <div className="data">
           <label htmlFor="bigPicture">Image</label>
-          <input type="file" id="img" name="bigPicture" />
+          <input
+            onChange={(e) => setImg(e.target.files[0])}
+            type="file"
+            id="img"
+            name="img"
+          />
+        </div>
+        <div className="data">
+          <label htmlFor="name">Name</label>
+          <input
+            placeholder="T-Shirt HE3T Crimson"
+            onChange={handleChange}
+            type="text"
+            id="name"
+            name="name"
+          />
+        </div>
+        <div className="data">
+          <label htmlFor="description">Description</label>
+          <input
+            placeholder="T-Shirt crée par une marque française renommé"
+            onChange={handleChange}
+            type="text"
+            id="description"
+            name="description"
+          />
         </div>
         <div className="data">
           <label htmlFor="quantity">Quantity</label>
-          <input min={0} type="number" id="quantity" name="quantity" />
+          <input
+            placeholder="588"
+            onChange={handleChange}
+            min={0}
+            type="number"
+            id="quantity"
+            name="quantity"
+          />
         </div>
         <div className="data">
           <label htmlFor="price">Price</label>
-          <input type="number" id="price" name="price" placeholder="35" />
+          <input
+            onChange={handleChange}
+            type="number"
+            id="price"
+            name="price"
+            placeholder="35"
+          />
         </div>
 
         <div className="data">
           <label htmlFor="categories">Catégories</label>
-          <select
-            multiple
+          <input
+            placeholder="nike,adidas"
             name="categories"
-            onChange={HandleChange}
+            onChange={(e) => setCat(e.target.value.split(","))}
             id="categories"
-          >
-            <option>Jean</option>
-            <option>Man</option>
-            <option>Woman</option>
-            <option>Shoes</option>
-            <option>Regular</option>
-            <option>Slim</option>
-            <option>Low</option>
-            <option>Nike</option>
-          </select>
+          />
+        </div>
+        <div className="data">
+          <label htmlFor="color">Color</label>
+          <input
+            placeholder="blue,red"
+            name="color"
+            onChange={(e) => setColor(e.target.value.split(","))}
+            id="color"
+          />
         </div>
         <div className="data">
           <label htmlFor="size">Size</label>
-          <select multiple name="size" onChange={HandleChange} id="size">
-            <option value="38">38</option>
-            <option value="39">39</option>
-            <option value="40">40</option>
-            <option value="41">41</option>
-            <option value="42">42</option>
-            <option value="43">43</option>
-            <option value="44">44</option>
-            <option value="45">45</option>
-            <option value="XS">XS</option>
-            <option value="S">S</option>
-            <option value="M">M</option>
-            <option value="L">L</option>
-            <option value="XL">XL</option>
-          </select>
+          <input
+            placeholder="38,39"
+            name="size"
+            onChange={(e) => setSize(e.target.value.split(","))}
+            id="size"
+          />
         </div>
         <div className="data">
           <label>Is Stock</label>
-          <select onChange={HandleChange} name="isStock" id="isStock">
+          <select onChange={handleChange} name="isStock" id="isStock">
             <option value=""></option>
             <option value="yes">Yes</option>
             <option value="no">No</option>
@@ -77,6 +126,7 @@ export default function AddProduct() {
           ) : (
             <button onClick={handleUpload}>Upload</button>
           )}
+          <button onClick={HandleClick}>Create</button>
         </div>
       </form>
     </div>

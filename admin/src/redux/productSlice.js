@@ -19,9 +19,26 @@ export const productSlice = createSlice({
       state.pending = false;
       state.error = true;
     },
+    addProductStart: (state) => {
+      state.pending = true;
+    },
+    addProductSuccess: (state, action) => {
+      state.pending = false;
+      state.products.push(action.payload);
+    },
+    addProductError: (state) => {
+      state.pending = false;
+      state.error = true;
+    },
   },
 });
 
-export const { fetchProductsStart, fetchProductsError, fetchProductsSuccess } =
-  productSlice.actions;
+export const {
+  fetchProductsStart,
+  fetchProductsError,
+  fetchProductsSuccess,
+  addProductError,
+  addProductStart,
+  addProductSuccess,
+} = productSlice.actions;
 export default productSlice.reducer;

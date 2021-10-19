@@ -109,7 +109,6 @@ export default function Products() {
         rows={products}
         columns={columns}
         pageSize={8}
-        rowsPerPageOptions={[2]}
         checkboxSelection
         disableSelectionOnClick
         getRowId={(row) => row._id}

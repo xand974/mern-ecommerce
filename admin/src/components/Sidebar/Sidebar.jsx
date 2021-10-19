@@ -35,7 +35,7 @@ export default function Sidebar() {
             <PersonOutlined className="icon" /> utilisateurs
           </span>
         </Link>
-        <Link to="products">
+        <Link to="/products">
           <span>
             <StorefrontOutlined className="icon" /> Produits
           </span>
