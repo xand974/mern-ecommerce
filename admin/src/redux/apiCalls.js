@@ -1,6 +1,9 @@
 import { loginStart, loginSuccess, loginFailure } from "./authSlice";
 import { adminRequest, userRequest } from "api";
 import {
+  createUserError,
+  createUserStart,
+  createUserSuccess,
   fetchUsersError,
   fetchUsersStart,
   fetchUsersStatsError,
@@ -77,5 +80,15 @@ export const fetchOrders = async (dispatch) => {
     dispatch(fetchOrdersSuccess(res.data));
   } catch (err) {
     dispatch(fetchOrdersError());
+  }
+};
+
+export const createUser = async (dispatch, user) => {
+  dispatch(createUserStart());
+  try {
+    const res = await adminRequest.post("/users/add", user);
+    dispatch(createUserSuccess(res.data));
+  } catch (err) {
+    dispatch(createUserError());
   }
 };

@@ -34,7 +34,10 @@ export default function UserList() {
         );
       },
     },
-    { field: "city", headerName: "City", width: 130 },
+    { field: "email", headerName: "Email", width: 130 },
+    { field: "address", headerName: "Address", width: 130 },
+    { field: "genre", headerName: "Genre", width: 130 },
+    { field: "job", headerName: "Job", width: 130 },
     {
       field: "isAdmin",
       headerName: "Admin",

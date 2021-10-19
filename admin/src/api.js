@@ -1,8 +1,19 @@
 import axios from "axios";
 
+let TOKEN;
+//#region CHECK TOKEN
+const checkTokenLocalStorage = () => {
+  if (JSON.parse(localStorage.getItem("persist:root")) === null) {
+    TOKEN = "";
+  } else {
+    TOKEN = JSON.parse(JSON.parse(localStorage.getItem("persist:root"))?.auth)
+      .currentUser?.accessToken;
+  }
+};
+//#endregion
+checkTokenLocalStorage();
+
 const BASEURL = "http://localhost:3001/api/v1";
-const TOKEN = JSON.parse(JSON.parse(localStorage.getItem("persist:root"))?.auth)
-  ?.currentUser?.accessToken;
 
 export const adminRequest = axios.create({
   baseURL: BASEURL,

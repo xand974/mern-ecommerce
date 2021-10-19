@@ -31,6 +31,17 @@ export const userSlice = createSlice({
       state.pending = false;
       state.error = true;
     },
+    createUserStart: (state) => {
+      state.pending = true;
+    },
+    createUserSuccess: (state, action) => {
+      state.pending = false;
+      state.users.push(action.payload);
+    },
+    createUserError: (state) => {
+      state.pending = false;
+      state.error = true;
+    },
   },
 });
 
@@ -41,5 +52,8 @@ export const {
   fetchUsersStatsStart,
   fetchUsersStatsSuccess,
   fetchUsersStatsError,
+  createUserError,
+  createUserStart,
+  createUserSuccess,
 } = userSlice.actions;
 export default userSlice.reducer;

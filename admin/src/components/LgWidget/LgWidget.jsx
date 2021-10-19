@@ -19,26 +19,26 @@ export default function LgWidget() {
   const { orders } = useSelector((state) => state.orders);
   const [users, setUsers] = useState([]);
 
-
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-      const arrayUsersPromise = await Promise.all(orders.map(order => {
-        return adminRequest.get(`/users/one/${order.userId}`)
-      }))
-      setUsers(arrayUsersPromise.map(u => u.data))
-      }catch(err){
-        console.log(err)
+        const arrayUsersPromise = await Promise.all(
+          orders.map((order) => {
+            return adminRequest.get(`/users/one/${order.userId}`);
+          })
+        );
+        setUsers(arrayUsersPromise.map((u) => u.data));
+      } catch (err) {
+        console.log(err);
       }
-    }
-    fetchUsers()
-  }, [orders])
+    };
+    fetchUsers();
+  }, [orders]);
 
   useEffect(() => {
     fetchOrders(dispatch);
   }, [dispatch]);
 
-  
   return (
     <div className="lgWidget">
       <h3 className="transaction__text">Lastest transactions</h3>

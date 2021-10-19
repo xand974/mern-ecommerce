@@ -21,6 +21,7 @@ function App() {
   const admin = JSON.parse(
     JSON.parse(localStorage.getItem("persist:root")).auth
   )?.currentUser?.user.isAdmin;
+
   return (
     <div className="app">
       <Router>

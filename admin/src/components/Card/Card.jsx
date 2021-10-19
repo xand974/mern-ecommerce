@@ -12,16 +12,25 @@ export default function Card({ revenus }) {
     <div className="card">
       <span className="title">Revenue</span>
       <div className="money">
-        <span className="dollar">${revenus[1]?.total}</span>
-        <span className="evo">
-          {perc}%
-          {perc > 0 ? (
-            <ArrowUpward style={{ color: "lightgreen" }} />
-          ) : (
-            <ArrowDownward style={{ color: "rgb(255, 107, 107)" }} />
-          )}
-        </span>
+        {revenus.length === 0 ? (
+          <span>
+            <strong>no Data</strong>
+          </span>
+        ) : (
+          <>
+            <span className="dollar">${revenus[1]?.total}</span>
+            <span className="evo">
+              {perc}%
+              {perc > 0 ? (
+                <ArrowUpward style={{ color: "lightgreen" }} />
+              ) : (
+                <ArrowDownward style={{ color: "rgb(255, 107, 107)" }} />
+              )}
+            </span>
+          </>
+        )}
       </div>
+
       <span className="compared">Compared to last month</span>
     </div>
   );

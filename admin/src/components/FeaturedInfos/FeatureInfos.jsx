@@ -20,6 +20,8 @@ export default function FeatureInfos() {
   return (
     <div className="featuredInfos">
       <Card revenus={revenus} />
+      <Card revenus={revenus} />
+      <Card revenus={revenus} />
     </div>
   );
 }
