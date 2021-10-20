@@ -1,18 +1,20 @@
 import "./userList.scss";
 import { DataGrid } from "@mui/x-data-grid";
 import { DeleteOutlined, EditOutlined } from "@material-ui/icons";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { fetchUsers } from "redux/apiCalls";
+import { deleteUser, fetchUsers } from "redux/apiCalls";
 import { useDispatch } from "react-redux";
 
 export default function UserList() {
   const { users } = useSelector((state) => state.users);
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const HandleClick = (id) => {
-    console.log("user has been deleted");
+    deleteUser(dispatch, id);
+    history.push("/users");
   };
 
   useEffect(() => {

@@ -30,6 +30,32 @@ export const productSlice = createSlice({
       state.pending = false;
       state.error = true;
     },
+    updateProductStart: (state) => {
+      state.pending = true;
+    },
+    updateProductSuccess: (state, action) => {
+      state.pending = false;
+      state.products.map((user) => {
+        return user._id === action.payload && action.payload;
+      });
+    },
+    updateProductError: (state) => {
+      state.pending = false;
+      state.error = true;
+    },
+    deleteProductStart: (state) => {
+      state.pending = true;
+    },
+    deleteProductSuccess: (state, action) => {
+      state.pending = false;
+      state.products.filter((user) => {
+        return user._id !== action.payload;
+      });
+    },
+    deleteProductError: (state) => {
+      state.pending = false;
+      state.error = true;
+    },
   },
 });
 
@@ -40,5 +66,11 @@ export const {
   addProductError,
   addProductStart,
   addProductSuccess,
+  updateProductError,
+  updateProductStart,
+  updateProductSuccess,
+  deleteProductError,
+  deleteProductStart,
+  deleteProductSuccess,
 } = productSlice.actions;
 export default productSlice.reducer;

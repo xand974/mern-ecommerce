@@ -67,14 +67,13 @@
     }
     .edit {
       padding: 20px;
-      height: 31rem;
       overflow-y: hidden;
       flex: 2;
       box-shadow: 0 0 20px rgba(0, 0, 0, 0.288);
       h3 {
         font-size: 30px;
       }
-      .wrapper {
+      .wrapper__product {
         display: flex;
 
         .left {
@@ -85,7 +84,7 @@
 
             label {
               font-weight: bold;
-              margin: 15px 0;
+              margin: 10px 0;
               font-size: 18px;
               color: rgb(85, 85, 85);
             }

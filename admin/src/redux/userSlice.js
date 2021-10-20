@@ -42,6 +42,32 @@ export const userSlice = createSlice({
       state.pending = false;
       state.error = true;
     },
+    updateUserStart: (state) => {
+      state.pending = true;
+    },
+    updateUserSuccess: (state, action) => {
+      state.pending = false;
+      state.users.map((user) => {
+        return user._id === action.payload && action.payload;
+      });
+    },
+    updateUserError: (state) => {
+      state.pending = false;
+      state.error = true;
+    },
+    deleteUserStart: (state) => {
+      state.pending = true;
+    },
+    deleteUserSuccess: (state, action) => {
+      state.pending = false;
+      state.users.filter((user) => {
+        return user._id !== action.payload;
+      });
+    },
+    deleteUserError: (state) => {
+      state.pending = false;
+      state.error = true;
+    },
   },
 });
 
@@ -55,5 +81,11 @@ export const {
   createUserError,
   createUserStart,
   createUserSuccess,
+  updateUserError,
+  updateUserStart,
+  updateUserSuccess,
+  deleteUserError,
+  deleteUserStart,
+  deleteUserSuccess,
 } = userSlice.actions;
 export default userSlice.reducer;

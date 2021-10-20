@@ -4,18 +4,30 @@ import {
   createUserError,
   createUserStart,
   createUserSuccess,
+  deleteUserError,
+  deleteUserStart,
+  deleteUserSuccess,
   fetchUsersError,
   fetchUsersStart,
   fetchUsersStatsError,
   fetchUsersStatsSuccess,
   fetchUsersSuccess,
+  updateUserError,
+  updateUserStart,
+  updateUserSuccess,
 } from "./userSlice";
 import {
   addProductError,
   addProductStart,
   addProductSuccess,
+  deleteProductError,
+  deleteProductStart,
+  deleteProductSuccess,
   fetchProductsStart,
   fetchProductsSuccess,
+  updateProductError,
+  updateProductStart,
+  updateProductSuccess,
 } from "./productSlice";
 import {
   fetchOrdersError,
@@ -88,6 +100,25 @@ export const fetchOrders = async (dispatch) => {
     dispatch(fetchOrdersError());
   }
 };
+export const updateUser = async (dispatch, id, user) => {
+  dispatch(updateUserStart());
+  try {
+    await adminRequest.put(`/users/${id}`, user);
+    dispatch(updateUserSuccess(id));
+  } catch (err) {
+    dispatch(updateUserError());
+  }
+};
+
+export const deleteUser = async (dispatch, id) => {
+  dispatch(deleteUserStart());
+  try {
+    await adminRequest.delete(`/users/${id}`);
+    dispatch(deleteUserSuccess(id));
+  } catch (err) {
+    dispatch(deleteUserError());
+  }
+};
 
 export const createUser = async (dispatch, user) => {
   dispatch(createUserStart());
@@ -106,5 +137,25 @@ export const addProduct = async (dispatch, product) => {
     dispatch(addProductSuccess(res.data));
   } catch (err) {
     dispatch(addProductError());
+  }
+};
+
+export const updateProduct = async (dispatch, id, product) => {
+  dispatch(updateProductStart());
+  try {
+    await adminRequest.put(`/products/${id}`, product);
+    dispatch(updateProductSuccess(id));
+  } catch (err) {
+    dispatch(updateProductError());
+  }
+};
+
+export const deleteProduct = async (dispatch, id) => {
+  dispatch(deleteProductStart());
+  try {
+    await adminRequest.delete(`/products/${id}`);
+    dispatch(deleteProductSuccess(id));
+  } catch (err) {
+    dispatch(deleteProductError());
   }
 };

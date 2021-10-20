@@ -6,13 +6,33 @@ import {
   PermIdentityOutlined,
   PhoneOutlined,
 } from "@material-ui/icons";
-import { Link, useLocation } from "react-router-dom";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { Link, useHistory, useLocation } from "react-router-dom";
+import { updateUser } from "redux/apiCalls";
 import "./user.scss";
 
 export default function User() {
   const location = useLocation();
   const user = location.user;
-  console.log(user);
+  const [userInput, setUserInput] = useState({});
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  const handleChange = (e) => {
+    const { value, name } = e.target;
+    setUserInput((prev) => {
+      return {
+        ...prev,
+        [name]: value,
+      };
+    });
+  };
+
+  const handleCreate = () => {
+    updateUser(dispatch, user?._id, userInput);
+    history.push("/users");
+  };
 
   return (
     <div className="user">
@@ -65,21 +85,61 @@ export default function User() {
           <h3>Edit</h3>
           <div className="wrapper">
             <div className="left">
-              <form>
+              <form onSubmit={(e) => e.preventDefault()}>
                 <label htmlFor="username">Username</label>
-                <input placeholder={user?.username} type="text" id="username" />
+                <input
+                  name="username"
+                  onChange={handleChange}
+                  placeholder={user?.username}
+                  type="text"
+                  id="username"
+                />
 
                 <label htmlFor="fullname">Full Name</label>
-                <input placeholder={user?.fullName} type="text" id="fullname" />
+                <input
+                  name="fullName"
+                  onChange={handleChange}
+                  placeholder={user?.fullName}
+                  type="text"
+                  id="fullname"
+                />
 
                 <label htmlFor="email">Email</label>
-                <input placeholder={user?.email} type="text" id="email" />
+                <input
+                  name="email"
+                  onChange={handleChange}
+                  placeholder={user?.email}
+                  type="text"
+                  id="email"
+                />
 
                 <label htmlFor="phone">Phone</label>
-                <input placeholder={user?.phone} type="text" id="phone" />
+                <input
+                  name="phone"
+                  onChange={handleChange}
+                  placeholder={user?.phone}
+                  type="text"
+                  id="phone"
+                />
 
                 <label htmlFor="address">Address</label>
-                <input placeholder={user?.address} type="text" id="adresse" />
+                <input
+                  name="address"
+                  onChange={handleChange}
+                  placeholder={user?.address}
+                  type="text"
+                  id="address"
+                />
+                <label htmlFor="isAdmin">isAdmin</label>
+                <select
+                  name="isAdmin"
+                  onChange={handleChange}
+                  htmlFor="isAdmin"
+                >
+                  <option value="">Selectionner</option>
+                  <option value="true">Oui</option>
+                  <option value="false">Non</option>
+                </select>
               </form>
             </div>
             <div className="right">
@@ -100,7 +160,9 @@ export default function User() {
                   </form>
                 </button>
               </div>
-              <button className="btn__update">Update</button>
+              <button onClick={handleCreate} className="btn__update">
+                Update
+              </button>
             </div>
           </div>
         </div>
