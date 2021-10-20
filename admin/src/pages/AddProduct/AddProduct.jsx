@@ -3,16 +3,19 @@ import "./addProduct.scss";
 import { useHistory } from "react-router";
 import { useDispatch } from "react-redux";
 import { addProduct } from "redux/apiCalls";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { storage } from "firebase.config";
 
 export default function AddProduct() {
-  const [uploaded, setUploaded] = useState();
+  const [uploaded, setUploaded] = useState(0);
+  const [progress, setProgress] = useState(0);
   const [userInput, setUserInput] = useState({});
   const [color, setColor] = useState([]);
   const [cat, setCat] = useState([]);
   const [size, setSize] = useState([]);
   const dispatch = useDispatch();
   const history = useHistory();
-  const [img, setImg] = useState("eza");
+  const [img, setImg] = useState();
 
   const handleChange = (e) => {
     setUserInput((prev) => {
@@ -25,10 +28,42 @@ export default function AddProduct() {
   };
 
   const HandleClick = () => {
-    addProduct(dispatch, { ...userInput, color, size, cat, img });
+    addProduct(dispatch, { ...userInput, color, size, categories: cat });
     history.push("/products");
   };
-  const handleUpload = () => {};
+  const handleUpload = () => {
+    upload([{ file: img, label: "img" }]);
+  };
+  console.log(cat);
+  const upload = (items) => {
+    items.forEach((item) => {
+      const fileName = Date.now() + "_" + item.file.name;
+      const storageRef = ref(storage, `/items/${fileName}`);
+      const uploadTask = uploadBytesResumable(storageRef, item.file);
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          setProgress(progress);
+        },
+        (err) => {
+          console.log(err);
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+            setUserInput((prev) => {
+              return {
+                ...prev,
+                [item.label]: url,
+              };
+            });
+            setUploaded((prev) => prev + 1);
+          });
+        }
+      );
+    });
+  };
 
   return (
     <div className="add">
@@ -121,12 +156,11 @@ export default function AddProduct() {
           </select>
         </div>
         <div className="data">
-          {uploaded === 5 ? (
+          {uploaded === 1 ? (
             <button onClick={HandleClick}>Create</button>
           ) : (
-            <button onClick={handleUpload}>Upload</button>
+            <button onClick={handleUpload}>Upload {progress}%</button>
           )}
-          <button onClick={HandleClick}>Create</button>
         </div>
       </form>
     </div>

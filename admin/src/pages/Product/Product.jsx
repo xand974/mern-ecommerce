@@ -27,7 +27,12 @@ export default function Product() {
   };
 
   const HandleClick = () => {
-    updateProduct(dispatch, product?._id, { ...userInput, color, cat, size });
+    updateProduct(dispatch, product?._id, {
+      ...userInput,
+      color,
+      categories: cat,
+      size,
+    });
     history.push("/products");
   };
   return (
