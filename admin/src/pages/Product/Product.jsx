@@ -5,16 +5,21 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { updateProduct } from "redux/apiCalls";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { storage } from "firebase.config";
 
 export default function Product() {
   const location = useLocation();
   const product = location.product;
   const [userInput, setUserInput] = useState({});
+  const [uploaded, setUploaded] = useState(0);
+  const [progress, setProgress] = useState(0);
   const history = useHistory();
   const dispatch = useDispatch();
   const [cat, setCat] = useState([]);
   const [size, setSize] = useState([]);
   const [color, setColor] = useState([]);
+  const [img, setImg] = useState(null);
 
   const HandleChange = (e) => {
     const { value, name } = e.target;
@@ -23,6 +28,39 @@ export default function Product() {
         ...prev,
         [name]: value,
       };
+    });
+  };
+
+  const handleUpload = () => {
+    upload([{ file: img, label: "img" }]);
+  };
+  const upload = (items) => {
+    items.forEach((item) => {
+      const fileName = Date.now() + "_" + item.file.name;
+      const storageRef = ref(storage, `/items/products/${fileName}`);
+      const uploadTask = uploadBytesResumable(storageRef, item.file);
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          setProgress(progress);
+        },
+        (err) => {
+          console.log(err);
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+            setUserInput((prev) => {
+              return {
+                ...prev,
+                [item.label]: url,
+              };
+            });
+            setUploaded((prev) => prev + 1);
+          });
+        }
+      );
     });
   };
 
@@ -187,21 +225,25 @@ export default function Product() {
             </div>
             <div className="right">
               <div className="img">
-                <img
-                  src={
-                    product?.img ||
-                    "https://i.pinimg.com/originals/1d/15/69/1d1569322ba074da6624218cab85129e.jpg"
-                  }
-                  alt=""
-                />
+                <img src={product?.img} alt="" />
                 <label htmlFor="thumbnail" className="thumbnail">
                   <CloudUploadOutlined className="icon" />
                 </label>
-                <input type="file" id="thumbnail" />
+                <input
+                  type="file"
+                  onChange={(e) => setImg(e.target.files[0])}
+                  id="thumbnail"
+                />
               </div>
-              <button onClick={HandleClick} className="btn__update">
-                Edit
-              </button>
+              {uploaded === 1 ? (
+                <button onClick={HandleClick} className="btn__update">
+                  Edit
+                </button>
+              ) : (
+                <button onClick={handleUpload} className="btn__update">
+                  Edit {progress}%
+                </button>
+              )}
             </div>
           </div>
         </div>

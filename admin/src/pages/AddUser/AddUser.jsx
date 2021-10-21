@@ -3,12 +3,16 @@ import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 import { createUser } from "redux/apiCalls";
 import "./add.scss";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { storage } from "firebase.config";
 
 export default function Add() {
   const [userInput, setUserInput] = useState({});
   const [img, setImg] = useState("");
   const dispatch = useDispatch();
   const history = useHistory();
+  const [uploaded, setUploaded] = useState(0);
+  const [progress, setProgress] = useState(0);
 
   const handleChange = (e) => {
     setUserInput((prev) => {
@@ -17,6 +21,39 @@ export default function Add() {
         ...prev,
         [name]: value,
       };
+    });
+  };
+
+  const handleUpload = () => {
+    upload([{ file: img, label: "img" }]);
+  };
+  const upload = (items) => {
+    items.forEach((item) => {
+      const fileName = Date.now() + "_" + item.file.name;
+      const storageRef = ref(storage, `/items/users/${fileName}`);
+      const uploadTask = uploadBytesResumable(storageRef, item.file);
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          setProgress(progress);
+        },
+        (err) => {
+          console.log(err);
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+            setUserInput((prev) => {
+              return {
+                ...prev,
+                [item.label]: url,
+              };
+            });
+            setUploaded((prev) => prev + 1);
+          });
+        }
+      );
     });
   };
 
@@ -167,9 +204,15 @@ export default function Add() {
             id="job"
           />
         </div>
-        <div className="data">
-          <button onClick={handleCreate}>Create</button>
-        </div>
+        {uploaded === 1 ? (
+          <div className="data">
+            <button onClick={handleCreate}>Create</button>
+          </div>
+        ) : (
+          <div className="data">
+            <button onClick={handleUpload}>Edit Photo {progress}%</button>
+          </div>
+        )}
       </form>
     </div>
   );

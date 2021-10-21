@@ -31,14 +31,14 @@ export default function AddProduct() {
     addProduct(dispatch, { ...userInput, color, size, categories: cat });
     history.push("/products");
   };
+
   const handleUpload = () => {
     upload([{ file: img, label: "img" }]);
   };
-  console.log(cat);
   const upload = (items) => {
     items.forEach((item) => {
       const fileName = Date.now() + "_" + item.file.name;
-      const storageRef = ref(storage, `/items/${fileName}`);
+      const storageRef = ref(storage, `/items/products/${fileName}`);
       const uploadTask = uploadBytesResumable(storageRef, item.file);
       uploadTask.on(
         "state_changed",
