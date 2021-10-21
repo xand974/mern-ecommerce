@@ -1,6 +1,6 @@
 import ColorFilterButton from "components/filterButton/ColorFilterButton";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   removeItem,
   calculateTotalMinus,
@@ -11,10 +11,11 @@ import "./cartItem.scss";
 export default function CartItem({ item }) {
   const [quantity, setQuantity] = useState(item.quantity);
   const dispatch = useDispatch();
+  console.log(item._id);
 
   useEffect(() => {
     if (quantity === 0) {
-      dispatch(removeItem({ _id: item._id }));
+      dispatch(removeItem(item._id));
     }
   }, [quantity, item, dispatch]);
 
