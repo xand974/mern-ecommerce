@@ -1,6 +1,6 @@
 import { DeleteOutlined, EditOutlined } from "@material-ui/icons";
 import { DataGrid } from "@mui/x-data-grid";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./productsList.scss";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
@@ -10,15 +10,20 @@ import { deleteProduct, fetchProducts } from "redux/apiCalls";
 export default function Products() {
   const { products } = useSelector((state) => state.products);
   const dispatch = useDispatch();
-  const history = useHistory();
 
   useEffect(() => {
     fetchProducts(dispatch);
   }, [dispatch]);
 
   const HandleClick = (id) => {
-    deleteProduct(dispatch, id);
-    history.push("/products");
+    const canDeleteProduct = window.confirm("you want to delete " + id);
+    if (canDeleteProduct) {
+      deleteProduct(dispatch, id);
+    } else {
+      return;
+    }
+
+    window.location.reload();
   };
 
   const columns = [

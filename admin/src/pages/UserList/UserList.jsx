@@ -1,7 +1,7 @@
 import "./userList.scss";
 import { DataGrid } from "@mui/x-data-grid";
 import { DeleteOutlined, EditOutlined } from "@material-ui/icons";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { deleteUser, fetchUsers } from "redux/apiCalls";
@@ -10,11 +10,15 @@ import { useDispatch } from "react-redux";
 export default function UserList() {
   const { users } = useSelector((state) => state.users);
   const dispatch = useDispatch();
-  const history = useHistory();
 
   const HandleClick = (id) => {
-    deleteUser(dispatch, id);
-    history.push("/users");
+    const canDeleteUser = window.confirm("do you want to delete " + id);
+    if (canDeleteUser) {
+      deleteUser(dispatch, id);
+    } else {
+      return;
+    }
+    window.location.reload();
   };
 
   useEffect(() => {

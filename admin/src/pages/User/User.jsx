@@ -12,12 +12,18 @@ import { Link, useHistory, useLocation } from "react-router-dom";
 import { updateUser } from "redux/apiCalls";
 import "./user.scss";
 
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { storage } from "firebase.config";
+
 export default function User() {
   const location = useLocation();
   const user = location.user;
   const [userInput, setUserInput] = useState({});
   const dispatch = useDispatch();
   const history = useHistory();
+  const [uploaded, setUploaded] = useState(0);
+  const [progress, setProgress] = useState(0);
+  const [img, setImg] = useState(null);
 
   const handleChange = (e) => {
     const { value, name } = e.target;
@@ -32,6 +38,38 @@ export default function User() {
   const handleCreate = () => {
     updateUser(dispatch, user?._id, userInput);
     history.push("/users");
+  };
+  const handleUpload = () => {
+    upload([{ file: img, label: "img" }]);
+  };
+  const upload = (items) => {
+    items.forEach((item) => {
+      const fileName = Date.now() + "_" + item.file.name;
+      const storageRef = ref(storage, `/items/users/${fileName}`);
+      const uploadTask = uploadBytesResumable(storageRef, item.file);
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          setProgress(progress);
+        },
+        (err) => {
+          console.log(err);
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+            setUserInput((prev) => {
+              return {
+                ...prev,
+                [item.label]: url,
+              };
+            });
+            setUploaded((prev) => prev + 1);
+          });
+        }
+      );
+    });
   };
 
   return (
@@ -144,25 +182,30 @@ export default function User() {
             </div>
             <div className="right">
               <div className="img">
-                <img
-                  src={
-                    user?.img ||
-                    "https://www.verywellmind.com/thmb/IeZeA3IaM9a6P8df_hIdUpu4hw0=/500x350/filters:no_upscale():max_bytes(150000):strip_icc()/GettyImages-4660327211-56b5fae93df78c0b13571d1e.jpg"
-                  }
-                  alt=""
-                />
+                <img src={user?.img} alt="" />
                 <button>
                   <form onSubmit={(e) => e.preventDefault()}>
-                    <input className="form__file" type="file" id="file" />
+                    <input
+                      className="form__file"
+                      onChange={(e) => setImg(e.target.files[0])}
+                      type="file"
+                      id="file"
+                    />
                     <label htmlFor="file">
                       <CloudUploadOutlined />
                     </label>
                   </form>
                 </button>
               </div>
-              <button onClick={handleCreate} className="btn__update">
-                Update
-              </button>
+              {uploaded === 1 ? (
+                <button onClick={handleCreate} className="btn__update">
+                  Update
+                </button>
+              ) : (
+                <button onClick={handleUpload} className="btn__update">
+                  edit photo {progress}%
+                </button>
+              )}
             </div>
           </div>
         </div>
