@@ -8,24 +8,21 @@ import {
 } from "redux/cartSlice";
 import "./cartItem.scss";
 
-export default function CartItem({ item }) {
-  const [quantity, setQuantity] = useState(item.quantity);
+export default function CartItem({ item, id }) {
+  const { products, quantity: q } = useSelector((state) => state.carts);
+  const [quantity, setQuantity] = useState(q);
   const dispatch = useDispatch();
-  console.log(item._id);
-
-  useEffect(() => {
-    if (quantity === 0) {
-      dispatch(removeItem(item._id));
-    }
-  }, [quantity, item, dispatch]);
 
   const handleClick = (e) => {
     if (e.target.value === "plus") {
       setQuantity((prev) => (prev += 1));
       dispatch(calculateTotalPlus({ price: item.price }));
     } else {
-      setQuantity(quantity <= 0 ? 0 : (prev) => (prev -= 1));
+      setQuantity((prev) => {
+        return prev <= 0 ? 0 : (prev -= 1);
+      });
       dispatch(calculateTotalMinus({ price: item.price }));
+      dispatch(removeItem(id));
     }
   };
 

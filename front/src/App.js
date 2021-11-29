@@ -11,12 +11,24 @@ import NotFound from "pages/notFound/NotFound";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Redirect } from "react-router";
 import Bravo from "pages/bravo/Bravo";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import WishList from "pages/wishList/WishList";
 import Error from "pages/error/Error";
-
+import jwt from "jwt-decode";
+import { useEffect } from "react";
+import { logOut } from "redux/apiCall";
 export default function App() {
   const { currentUser } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (currentUser) {
+      if (jwt(currentUser.accessToken).exp * 1000 < Date.now()) {
+        logOut(dispatch);
+        window.location.reload();
+      }
+    }
+  }, [currentUser, dispatch]);
+
   return (
     <Router>
       <div className="App">
@@ -36,7 +48,7 @@ export default function App() {
               <Route path="/products" exact>
                 <ProductList
                   categoryTitle="TOUS LES PRODUITS"
-                  printCategory={true}
+                  printCategory={false}
                 />
               </Route>
               <Route path="/products/:category" exact>

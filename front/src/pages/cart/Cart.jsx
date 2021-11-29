@@ -61,12 +61,11 @@ export default function Cart() {
             <span>Ma Liste De Souhait({userWishList.length})</span>
           </Link>
         </div>
-        <button className="payment__btn">Passer Au Paiement</button>
       </div>
       <div className="container">
         <div className="items">
           {products.map((data, key) => {
-            return <CartItem key={key} item={data} />;
+            return <CartItem key={key} item={data} id={data._id} />;
           })}
         </div>
         <div className="checkout">

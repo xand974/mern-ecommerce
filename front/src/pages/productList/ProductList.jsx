@@ -29,6 +29,7 @@ export default function ProductList({ printCategory, categoryTitle }) {
       setFilteredProducts(() => {
         return products.filter((item) => {
           return Object.entries(filters).every(([key, value]) => {
+            console.log(item[key]);
             return item[key].includes(value);
           });
         });
@@ -54,7 +55,7 @@ export default function ProductList({ printCategory, categoryTitle }) {
     <div className="product__list">
       <div className="title">
         {printCategory && (
-          <form onSubmit={(e) => e.preventDefault()}>
+          <form method="post" onSubmit={(e) => e.preventDefault()}>
             <div className="left">
               <select onChange={handleChange} name="color" id="">
                 <option value="">Select Color</option>

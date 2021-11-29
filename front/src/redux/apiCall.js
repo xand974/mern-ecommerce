@@ -8,6 +8,7 @@ import {
   loginFailure,
   loginStart,
   loginSuccess,
+  logout,
   registerStart,
   registerSuccess,
 } from "./userSlice";
@@ -62,4 +63,9 @@ export const sendOrder = async (order) => {
   } catch (err) {
     console.log(err);
   }
+};
+
+export const logOut = (dispatch) => {
+  dispatch(logout());
+  localStorage.clear();
 };

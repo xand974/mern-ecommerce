@@ -19,7 +19,7 @@ import Product from "pages/Product/Product";
 
 function App() {
   const admin = JSON.parse(
-    JSON.parse(localStorage.getItem("persist:root")).auth
+    JSON.parse(localStorage.getItem("persist:root"))?.auth
   )?.currentUser?.user.isAdmin;
 
   return (

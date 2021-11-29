@@ -9,14 +9,26 @@ export default function Slider() {
   const handleSliderClick = (direction) => {
     if (direction === "left") {
       setSlideIndex(slideIndex > 0 ? slideIndex - 1 : slideItems.length - 1);
-      sliderContainer.current.style.transform = `translateX( ${
-        -80 * slideIndex
-      }vw)`;
+      if (window.innerWidth <= 911) {
+        sliderContainer.current.style.transform = `translateX( ${
+          -100 * slideIndex
+        }vw)`;
+      } else {
+        sliderContainer.current.style.transform = `translateX( ${
+          -80 * slideIndex
+        }vw)`;
+      }
     } else if (direction === "right") {
       setSlideIndex(slideIndex < slideItems.length - 1 ? slideIndex + 1 : 0);
-      sliderContainer.current.style.transform = `translateX( ${
-        -80 * slideIndex
-      }vw)`;
+      if (window.innerWidth <= 911) {
+        sliderContainer.current.style.transform = `translateX( ${
+          -100 * slideIndex
+        }vw)`;
+      } else {
+        sliderContainer.current.style.transform = `translateX( ${
+          -80 * slideIndex
+        }vw)`;
+      }
     }
   };
 

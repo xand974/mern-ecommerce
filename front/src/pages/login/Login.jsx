@@ -22,10 +22,10 @@ export default function Login() {
       <div className="container">
         <h1>CONNEXION</h1>
         <form onSubmit={(e) => e.preventDefault()}>
-          <label htmlFor="email">EMAIL</label>
+          <label htmlFor="username">USERNAME</label>
           <input
             type="text"
-            id="email"
+            id="username"
             onChange={(e) => setUsername(e.target.value)}
             placeholder="john@gmail.com"
           />

@@ -13,7 +13,7 @@ export const cartSlice = createSlice({
   reducers: {
     //ajouter produit
     addProduct: (state, action) => {
-      state.products.push(action.payload);
+      state.products = [...state.products, action.payload];
       state.quantity += 1;
       state.total += action.payload.price * action.payload.quantity;
       state.active = true;
@@ -35,6 +35,7 @@ export const cartSlice = createSlice({
     },
     calculateTotalPlus: (state, action) => {
       state.total += action.payload.price;
+      state.quantity += 1;
     },
     //reset cart
     resetCart: (state) => {
