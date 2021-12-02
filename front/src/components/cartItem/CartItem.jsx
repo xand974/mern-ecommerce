@@ -9,9 +9,10 @@ import {
 import "./cartItem.scss";
 
 export default function CartItem({ item, id }) {
-  const { products, quantity: q } = useSelector((state) => state.carts);
+  const { quantity: q } = useSelector((state) => state.carts);
   const [quantity, setQuantity] = useState(q);
   const dispatch = useDispatch();
+  console.log(quantity);
 
   const handleClick = (e) => {
     if (e.target.value === "plus") {

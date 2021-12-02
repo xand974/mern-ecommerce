@@ -35,16 +35,13 @@ export default function Bravo() {
   }, []);
 
   return (
-    <div className="bravo">
+    <div className="bravo" onClick={() => setDetailClicked(false)}>
       <div className="order__resume--container">
         <h1 className="order__resume--title">My Order</h1>
         <div className="order__wrapper">
           <div className="order__card" onClick={() => setDetailClicked(true)}>
             <div className="order__card--img">
-              <img
-                src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
-                alt=""
-              />
+              <img src={products[0]?.img} alt="" />
             </div>
             <div className="order__card--infos">
               <span className="order__card--infos--title">
