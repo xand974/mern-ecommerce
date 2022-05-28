@@ -7,7 +7,9 @@ import StripeCheckout from "react-stripe-checkout";
 import "./cart.scss";
 import { useHistory } from "react-router";
 import { resetCart } from "redux/cartSlice";
-import { sendCart } from "redux/apiCall";
+import { sendCart, sendOrder } from "redux/apiCall";
+import ClipLoader from "react-spinners/ClipLoader";
+import { css } from "@emotion/react";
 
 export default function Cart() {
   const { products, total, quantity } = useSelector((state) => state.carts);
@@ -16,10 +18,18 @@ export default function Cart() {
   const dispatch = useDispatch();
   const history = useHistory();
   const { userWishList } = useSelector((state) => state.wishList);
+  const [loading, setLoading] = useState(false);
+  const override = css`
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  `;
 
   useEffect(() => {
     const sendToken = async () => {
       try {
+        setLoading(true);
         const res = await publicRequest.post("/stripe/payment", {
           tokenId: stripeToken.id,
           amount: total * 100,
@@ -35,9 +45,23 @@ export default function Cart() {
           },
           dispatch
         );
+        const order = {
+          userId: currentUser.user._id,
+          products: products.map((product) => ({
+            productId: product._id,
+            quantity: product.quantity,
+          })),
+          status: "confirmation",
+          amount: res.data.amount / 100,
+          address: res.data.billing_details.address,
+        };
+
+        res && products && sendOrder(order);
         dispatch(resetCart());
+        setLoading(false);
         history.push("/bravo", { res: res.data, products: products });
       } catch (err) {
+        setLoading(false);
         history.push("/error");
         throw err;
       }
@@ -51,6 +75,7 @@ export default function Cart() {
 
   return (
     <div className="cart">
+      <ClipLoader loading={loading} css={override} />
       <h1>Mon Panier</h1>
       <div className="cart__links">
         <Link to="/">
@@ -65,9 +90,6 @@ export default function Cart() {
       <div className="container">
         <div className="items">
           {products.map((data, key) => {
-            {
-              /* remove data._id */
-            }
             return <CartItem key={key} item={data} id={data._id} />;
           })}
         </div>

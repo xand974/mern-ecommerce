@@ -61,7 +61,7 @@ export default function App() {
               <Route path="/cart" exact>
                 <Cart />
               </Route>
-              <Route path="/bravo" exact>
+              <Route path={["/bravo", "/order"]} exact>
                 <Bravo />
               </Route>
               <Route path="/error" exact>

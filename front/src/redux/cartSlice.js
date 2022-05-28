@@ -16,7 +16,7 @@ export const cartSlice = createSlice({
     addProduct: (state, action) => {
       const products = current(state.products);
       const existingProduct =
-        products.find((item) => item.id === action.payload._id) ?? null;
+        products.find((item) => item._id === action.payload._id) ?? null;
       const newTotal =
         state.total + action.payload.price * action.payload.quantity;
 
@@ -47,13 +47,13 @@ export const cartSlice = createSlice({
     },
     calculateTotalMinus: (state, action) => {
       const products = current(state.products);
-      const product = products.find((item) => item.id === action.payload.id);
+      const product = products.find((item) => item._id === action.payload.id);
       if (!product) return state;
       const newTotal =
         state.total <= 0 ? 0 : state.total - action.payload.price;
       let newProducts;
       if (product.quantity - 1 === 0) {
-        newProducts = products.filter((item) => item.id !== action.payload.id);
+        newProducts = products.filter((item) => item._id !== action.payload.id);
         const newQuantity = state.quantity === 0 ? 0 : state.quantity - 1;
         return {
           ...state,
@@ -64,7 +64,7 @@ export const cartSlice = createSlice({
       }
 
       newProducts = products.map((item) => {
-        if (item.id === product.id) {
+        if (item._id === product._id) {
           return {
             ...item,
             quantity: item.quantity - 1,
@@ -81,10 +81,10 @@ export const cartSlice = createSlice({
     },
     calculateTotalPlus: (state, action) => {
       const products = current(state.products);
-      const product = products.find((item) => item.id === action.payload.id);
+      const product = products.find((item) => item._id === action.payload.id);
       if (!product) return state;
       const newProducts = products.map((item) => {
-        if (item.id === product.id) {
+        if (item._id === product._id) {
           return {
             ...item,
             quantity: item.quantity + 1,

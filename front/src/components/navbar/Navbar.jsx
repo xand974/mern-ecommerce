@@ -3,6 +3,7 @@ import {
   SearchOutlined,
   ShoppingBagOutlined,
   LogoutOutlined,
+  ShoppingCartOutlined,
 } from "@mui/icons-material";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -43,6 +44,9 @@ export default function Navbar() {
           </Link>
         </ul>
         <div className="navbar__account">
+          <Link to="/order">
+            <ShoppingCartOutlined className="icon" />
+          </Link>
           <Link to="/cart">
             <div className="navbar__account--shopping">
               <ShoppingBagOutlined className="icon bag" />
