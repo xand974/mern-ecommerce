@@ -20,6 +20,7 @@ import { logOut } from "redux/apiCall";
 export default function App() {
   const { currentUser } = useSelector((state) => state.user);
   const dispatch = useDispatch();
+
   useEffect(() => {
     if (currentUser) {
       if (jwt(currentUser.accessToken).exp * 1000 < Date.now()) {

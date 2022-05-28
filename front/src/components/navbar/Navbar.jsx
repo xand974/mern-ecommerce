@@ -13,6 +13,7 @@ import { useHistory } from "react-router";
 
 export default function Navbar() {
   const { active, quantity } = useSelector((state) => state.carts);
+  const { currentUser } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -28,6 +29,7 @@ export default function Navbar() {
         <Link to="/" style={{ textDecoration: "none", color: "black" }}>
           <h1>MALET</h1>
         </Link>
+        <span>Bonjour {currentUser?.user.username}!</span>
         <ul>
           <form>
             <input placeholder="search" type="text" />

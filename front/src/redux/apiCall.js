@@ -4,8 +4,13 @@ import {
   fetchProductsFailure,
 } from "./productSlice";
 import { privateRequest, publicRequest } from "api";
-import { loginFailure, loginStart, loginSuccess, logout } from "./userSlice";
-import { sendCartError, sendCartStart, sendCartSuccess } from "./cartSlice";
+import { loginFailure, loginStart, loginSuccess, resetAuth } from "./userSlice";
+import {
+  sendCartError,
+  sendCartStart,
+  sendCartSuccess,
+  resetCart,
+} from "./cartSlice";
 
 export const fetchProducts = async (cat, dispatch) => {
   dispatch(fetchProductsStart());
@@ -56,6 +61,6 @@ export const sendOrder = async (order) => {
 };
 
 export const logOut = (dispatch) => {
-  dispatch(logout());
-  localStorage.clear();
+  dispatch(resetAuth());
+  dispatch(resetCart());
 };

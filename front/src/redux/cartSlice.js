@@ -65,18 +65,20 @@ export const cartSlice = createSlice({
       };
     },
     calculateTotalPlus: (state, action) => {
-      state.total += action.payload.price;
-      state.quantity += 1;
+      const newTotal = state.total + action.payload.price;
+      const newQuantity = state.quantity + 1;
       return {
         ...state,
-        total: state.total + action.payload.price,
-        quantity: state.quantity + 1,
+        total: newTotal,
+        quantity: newQuantity,
       };
     },
-    resetCart: () => {
-      return {
-        state: { ...initialState },
+    resetCart: (state) => {
+      let currentState = current(state);
+      currentState = {
+        ...initialState,
       };
+      return currentState;
     },
     sendCartStart: (state) => {
       state.pending = true;

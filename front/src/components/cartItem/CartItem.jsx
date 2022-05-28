@@ -1,6 +1,6 @@
 import ColorFilterButton from "components/filterButton/ColorFilterButton";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 import {
   removeItem,
   calculateTotalMinus,

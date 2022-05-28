@@ -21,9 +21,6 @@ export const userSlice = createSlice({
       state.pending = false;
       state.error = true;
     },
-    logout: (state) => {
-      state.currentUser = null;
-    },
     resetAuth: () => {
       return {
         state: initialState,
@@ -32,6 +29,6 @@ export const userSlice = createSlice({
   },
 });
 
-export const { loginStart, loginSuccess, loginFailure, resetAuth, logout } =
+export const { loginStart, loginSuccess, loginFailure, resetAuth } =
   userSlice.actions;
 export default userSlice.reducer;
