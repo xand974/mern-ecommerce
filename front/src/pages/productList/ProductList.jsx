@@ -10,6 +10,8 @@ export default function ProductList({ printCategory, categoryTitle }) {
   const location = useLocation();
   const CATEGORY_NAME = location.pathname.split("/")[2];
   const dispatch = useDispatch();
+  const [colors, setColors] = useState([]);
+  const [sizes, setSizes] = useState([]);
   const [filters, setFilters] = useState({});
   const { products } = useSelector((state) => state.products);
 
@@ -25,6 +27,16 @@ export default function ProductList({ printCategory, categoryTitle }) {
   }, [CATEGORY_NAME, dispatch]);
 
   useEffect(() => {
+    const colorsFromProducts = products.map((item) => item.color).flat();
+    const setOfColors = new Set(colorsFromProducts);
+    setColors(Array.from(setOfColors));
+
+    const sizeFromProducts = products.map((item) => item.size).flat();
+    const setOfSize = new Set(sizeFromProducts);
+    setSizes(Array.from(setOfSize));
+  }, [products]);
+
+  useEffect(() => {
     CATEGORY_NAME &&
       setFilteredProducts(() => {
         return products.filter((item) => {
@@ -35,13 +47,15 @@ export default function ProductList({ printCategory, categoryTitle }) {
       });
   }, [products, filters, CATEGORY_NAME]);
 
-  useEffect(() => {
-    if (sort === "new") {
-    }
-  }, [sort, products]);
+  // useEffect(() => {
+  //   if (sort === "new") {
+  //   }
+  // }, [sort, products]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    if (value === "") return;
+
     setFilters((prev) => {
       return {
         ...prev,
@@ -58,29 +72,25 @@ export default function ProductList({ printCategory, categoryTitle }) {
             <div className="left">
               <select onChange={handleChange} name="color" id="">
                 <option value="">Select Color</option>
-                <option value="blue">Blue</option>
-                <option value="red">Red</option>
-                <option value="black">Black</option>
-                <option value="yellow">Gold</option>
-                <option value="gray">Gray</option>
+                {colors?.map((item, index) => (
+                  <option key={index} value={item}>
+                    {item.toUpperCase()}
+                  </option>
+                ))}
               </select>
               <select onChange={handleChange} name="size" id="">
                 <option value="">Select size</option>
-                <option value="s">S</option>
-                <option value="xs">XS</option>
-                <option value="m">M</option>
-                <option value="l">L</option>
-                <option value="xl">XL</option>
-                <option value="38">38</option>
-                <option value="40">40</option>
-                <option value="42">42</option>
-                <option value="44">44</option>
-                <option value="45">45</option>
+                {sizes?.map((item, index) => (
+                  <option key={index} value={item}>
+                    {item.toUpperCase()}
+                  </option>
+                ))}
               </select>
               <button
                 className="reset__btn"
+                type="reset"
                 onClick={() => {
-                  setFilters({ color: "", size: "" });
+                  setFilters({});
                 }}
               >
                 Reset Filter

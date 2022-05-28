@@ -87,13 +87,13 @@ export const collectionData = [
     id: 548646846,
     title: "For The Woman",
     img: "https://images.unsplash.com/photo-1600328759671-85927887458d?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=387&q=80",
-    cat: "woman",
+    cat: "femme",
   },
   {
     id: 4548468,
     title: "For The Men",
     img: "https://images.unsplash.com/photo-1571945153237-4929e783af4a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=387&q=80",
-    cat: "man",
+    cat: "homme",
   },
 
   {
