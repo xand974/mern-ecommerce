@@ -1,11 +1,7 @@
 import ColorFilterButton from "components/filterButton/ColorFilterButton";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import {
-  removeItem,
-  calculateTotalMinus,
-  calculateTotalPlus,
-} from "redux/cartSlice";
+import { calculateTotalMinus, calculateTotalPlus } from "redux/cartSlice";
 import "./cartItem.scss";
 
 export default function CartItem({ item, id }) {
@@ -15,13 +11,12 @@ export default function CartItem({ item, id }) {
   const handleClick = (e) => {
     if (e.target.value === "plus") {
       setQuantity((prev) => (prev += 1));
-      dispatch(calculateTotalPlus({ price: item.price }));
+      dispatch(calculateTotalPlus({ price: item.price, id }));
     } else {
       setQuantity((prev) => {
         return prev <= 0 ? 0 : (prev -= 1);
       });
-      dispatch(calculateTotalMinus({ price: item.price }));
-      dispatch(removeItem(id));
+      dispatch(calculateTotalMinus({ price: item.price, id }));
     }
   };
 

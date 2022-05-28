@@ -139,10 +139,11 @@
             color: white;
           }
           &.disabled {
-            background: gray;
+            background: lightgrey;
+            border: 1px solid #aeaeae;
+            color: #aeaeae;
             &:hover {
-              background: gray;
-              color: black;
+              background: lightgray;
               cursor: initial;
             }
           }

@@ -16,7 +16,7 @@ export const cartSlice = createSlice({
     addProduct: (state, action) => {
       const products = current(state.products);
       const existingProduct =
-        products.find((item) => item.id === action.payload.id) ?? null;
+        products.find((item) => item.id === action.payload._id) ?? null;
       const newTotal =
         state.total + action.payload.price * action.payload.quantity;
 
@@ -45,32 +45,59 @@ export const cartSlice = createSlice({
         active: true,
       };
     },
-    removeItem: (state, action) => {
-      const newQuantity = state.quantity === 0 ? 0 : state.quantity - 1;
-      const newProducts = state.products.filter(
-        (product) => product._id !== action.payload
-      );
-      return {
-        ...state,
-        products: newProducts,
-        quantity: newQuantity,
-      };
-    },
     calculateTotalMinus: (state, action) => {
+      const products = current(state.products);
+      const product = products.find((item) => item.id === action.payload.id);
+      if (!product) return state;
       const newTotal =
         state.total <= 0 ? 0 : state.total - action.payload.price;
+      let newProducts;
+      if (product.quantity - 1 === 0) {
+        newProducts = products.filter((item) => item.id !== action.payload.id);
+        const newQuantity = state.quantity === 0 ? 0 : state.quantity - 1;
+        return {
+          ...state,
+          quantity: newQuantity,
+          products: newProducts,
+          total: newTotal,
+        };
+      }
+
+      newProducts = products.map((item) => {
+        if (item.id === product.id) {
+          return {
+            ...item,
+            quantity: item.quantity - 1,
+          };
+        }
+        return item;
+      });
+
       return {
         ...state,
         total: newTotal,
+        products: newProducts,
       };
     },
     calculateTotalPlus: (state, action) => {
+      const products = current(state.products);
+      const product = products.find((item) => item.id === action.payload.id);
+      if (!product) return state;
+      const newProducts = products.map((item) => {
+        if (item.id === product.id) {
+          return {
+            ...item,
+            quantity: item.quantity + 1,
+          };
+        }
+        return item;
+      });
+
       const newTotal = state.total + action.payload.price;
-      const newQuantity = state.quantity + 1;
       return {
         ...state,
         total: newTotal,
-        quantity: newQuantity,
+        products: newProducts,
       };
     },
     resetCart: (state) => {
@@ -103,7 +130,6 @@ export const {
   sendCartStart,
   sendCartSuccess,
   sendCartError,
-  removeItem,
   calculateTotalMinus,
   calculateTotalPlus,
 } = cartSlice.actions;

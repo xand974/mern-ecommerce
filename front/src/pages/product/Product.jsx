@@ -6,6 +6,8 @@ import { useEffect } from "react";
 import { publicRequest } from "api";
 import { addProduct } from "redux/cartSlice";
 import { useDispatch } from "react-redux";
+import ClipLoader from "react-spinners/ClipLoader";
+import { css } from "@emotion/react";
 
 export default function Product() {
   const dispatch = useDispatch();
@@ -15,6 +17,14 @@ export default function Product() {
   const [size, setSize] = useState(undefined);
   const [color, setColor] = useState(undefined);
   const [quantity, setQuantity] = useState(1);
+  const [loading, setLoading] = useState(false);
+
+  const override = css`
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  `;
 
   const handleQuantity = (e) => {
     if (e.target.value === "plus") {
@@ -31,8 +41,15 @@ export default function Product() {
 
   useEffect(() => {
     const fetchProduct = async () => {
-      const res = await publicRequest.get(`/products/one/${PRODUCT_ID}`);
-      setProduct(res.data);
+      try {
+        setLoading(true);
+        const res = await publicRequest.get(`/products/one/${PRODUCT_ID}`);
+        setProduct(res.data);
+        setLoading(false);
+      } catch (err) {
+        setLoading(false);
+        throw err;
+      }
     };
     fetchProduct();
   }, [PRODUCT_ID]);
@@ -41,11 +58,15 @@ export default function Product() {
     const isPropDefined = isDefined();
     if (!isPropDefined) return;
     dispatch(addProduct({ ...product, quantity, size, color }));
-    window.scrollTo(0, 0);
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
   };
 
   return (
     <div className="product">
+      <ClipLoader loading={loading} css={override} />
       <div className="left">
         <img src={product.img} alt="" />
       </div>
@@ -59,6 +80,7 @@ export default function Product() {
               <span>Color</span>
               {product.color?.map((col, key) => (
                 <ColorFilterButton
+                  selected={color}
                   color={col}
                   key={key}
                   onClick={(e) => {

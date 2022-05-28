@@ -5,10 +5,21 @@
   border-radius: 50%;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
+  position: relative;
   &:hover {
     box-shadow: 0 0 10px rgb(126, 126, 126);
   }
-  &:focus {
-    border: 1px solid black;
+  &.active {
+    &::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      border: 2px solid rgb(15, 14, 17);
+    }
   }
 }

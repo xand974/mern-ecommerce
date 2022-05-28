@@ -65,6 +65,9 @@ export default function Cart() {
       <div className="container">
         <div className="items">
           {products.map((data, key) => {
+            {
+              /* remove data._id */
+            }
             return <CartItem key={key} item={data} id={data._id} />;
           })}
         </div>
