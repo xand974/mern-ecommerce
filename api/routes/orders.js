@@ -18,11 +18,21 @@ router.post("/add", verifyToken, async (req, res) => {
   }
 });
 
+router.post("/all-from-user", [verifyToken], async (req, res) => {
+  try {
+    const orders = await Order.find({ userId: req.body.userId });
+    if (!orders) return res.status(404).json("order not found");
+    return res.status(200).json(orders);
+  } catch (err) {
+    return res.status(500).json(err);
+  }
+});
 //get user orders
 router.get("/one/:id", [verifyToken, verifyUserOrIsAdmin], async (req, res) => {
   try {
-    const order = await Order.find({ _id: req.params.id });
+    const order = await Order.findById(req.params.id);
     if (!order) return res.status(404).json("order not found");
+    return res.status(200).json(order);
   } catch (err) {
     return res.status(500).json(err);
   }
