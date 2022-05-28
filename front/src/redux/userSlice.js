@@ -1,12 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+const initialState = {
+  currentUser: null,
+  pending: false,
+  error: false,
+};
+
 export const userSlice = createSlice({
   name: "user",
-  initialState: {
-    currentUser: null,
-    pending: false,
-    error: false,
-  },
+  initialState,
   reducers: {
     loginStart: (state) => {
       state.pending = true;
@@ -19,29 +21,17 @@ export const userSlice = createSlice({
       state.pending = false;
       state.error = true;
     },
-    registerStart: (state) => {
-      state.pending = true;
-    },
-    registerSuccess: (state) => {
-      state.pending = false;
-    },
-    registerFailure: (state) => {
-      state.pending = false;
-      state.error = true;
-    },
     logout: (state) => {
       state.currentUser = null;
+    },
+    resetAuth: () => {
+      return {
+        state: initialState,
+      };
     },
   },
 });
 
-export const {
-  loginStart,
-  loginSuccess,
-  loginFailure,
-  registerFailure,
-  registerStart,
-  registerSuccess,
-  logout,
-} = userSlice.actions;
+export const { loginStart, loginSuccess, loginFailure, resetAuth, logout } =
+  userSlice.actions;
 export default userSlice.reducer;

@@ -12,17 +12,23 @@ export default function Product() {
   const location = useLocation();
   const PRODUCT_ID = location.pathname.split("/")[2];
   const [product, setProduct] = useState({});
-  const [size, setSize] = useState(null);
-  const [color, setColor] = useState(null);
+  const [size, setSize] = useState(undefined);
+  const [color, setColor] = useState(undefined);
   const [quantity, setQuantity] = useState(1);
 
   const handleQuantity = (e) => {
     if (e.target.value === "plus") {
       setQuantity((prev) => (prev += 1));
-    } else {
-      setQuantity(quantity <= 1 ? 1 : (prev) => (prev -= 1));
+      return;
     }
+    setQuantity((prev) => {
+      if (quantity <= 1) return 1;
+      return prev - 1;
+    });
   };
+
+  const isDefined = () => color !== undefined && size !== undefined;
+
   useEffect(() => {
     const fetchProduct = async () => {
       const res = await publicRequest.get(`/products/one/${PRODUCT_ID}`);
@@ -31,7 +37,9 @@ export default function Product() {
     fetchProduct();
   }, [PRODUCT_ID]);
 
-  const handleClick = () => {
+  const addToCart = () => {
+    const isPropDefined = isDefined();
+    if (!isPropDefined) return;
     dispatch(addProduct({ ...product, quantity, size, color }));
     window.scrollTo(0, 0);
   };
@@ -89,7 +97,13 @@ export default function Product() {
             <div className="alert__quantity">
               {product.quantity - quantity} encore en stock !
             </div>
-            <button onClick={handleClick}>Ajouter au panier</button>
+            <button
+              onClick={() => addToCart()}
+              disabled={!isDefined()}
+              className={isDefined() ? "" : "disabled"}
+            >
+              Ajouter au panier
+            </button>
           </div>
         </div>
       </div>

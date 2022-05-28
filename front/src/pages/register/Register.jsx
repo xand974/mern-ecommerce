@@ -1,19 +1,38 @@
 import "./register.scss";
-import { CreateOutlined } from "@mui/icons-material";
+import { CreateOutlined, LoopOutlined } from "@mui/icons-material";
 import { Link, useHistory } from "react-router-dom";
 import { useState } from "react";
 import { register } from "redux/apiCall";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 export default function Register() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const { error } = useSelector((state) => state.user);
+  const [credential, setCredential] = useState({});
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
+
   const dispatch = useDispatch();
   const history = useHistory();
-  const handleClick = () => {
-    register({ username, password }, dispatch, history);
+  const handleClick = async () => {
+    try {
+      setLoading(true);
+      await register({ ...credential }, dispatch);
+      history.push("/login");
+      setLoading(false);
+    } catch (err) {
+      setError(true);
+      setLoading(false);
+    }
   };
+
+  const onChange = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    setCredential((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
   return (
     <div className="register">
       <img
@@ -23,24 +42,41 @@ export default function Register() {
       <div className="container">
         <h1>S'ENREGISTRER</h1>
         <form onSubmit={(e) => e.preventDefault()}>
-          <label htmlFor="email">USERNAME</label>
+          <label htmlFor="username">USERNAME</label>
           <input
-            onChange={(e) => setUsername(e.target.value)}
+            required
+            onChange={onChange}
             type="text"
             id="username"
             placeholder="john000"
+            name="username"
+          />
+          <label htmlFor="email">EMAIL</label>
+          <input
+            required
+            onChange={onChange}
+            type="text"
+            id="email"
+            placeholder="john@gmail.com"
+            name="email"
           />
           <label htmlFor="password">PASSWORD</label>
           <input
-            onChange={(e) => setPassword(e.target.value)}
+            required
+            onChange={onChange}
             type="password"
             placeholder="abc123?."
             id="password"
+            name="password"
           />
           <button onClick={handleClick}>
-            <CreateOutlined />
+            {loading ? <LoopOutlined className="loop" /> : <CreateOutlined />}
           </button>
-          {error && <span style={{ color: "red" }}>Something happened</span>}
+          {error && (
+            <span style={{ color: "red", marginTop: "10px" }}>
+              Something happened
+            </span>
+          )}
         </form>
         <Link to="/login">
           <span className="create__account__text">Se connecter</span>

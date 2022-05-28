@@ -13,8 +13,8 @@ export default function Login() {
 
   const { pending, error } = useSelector((state) => state.auth);
 
-  const HandleClick = () => {
-    login({ username, password }, dispatch);
+  const HandleClick = async () => {
+    await login({ username, password }, dispatch);
     history.push("/");
   };
 
@@ -24,11 +24,7 @@ export default function Login() {
         <div className="text">
           <span>Login</span>
         </div>
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-          }}
-        >
+        <form onSubmit={(e) => e.preventDefault()}>
           <input
             type="text"
             value={username}

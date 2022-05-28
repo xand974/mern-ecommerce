@@ -39,7 +39,7 @@ export default function Cart() {
         history.push("/bravo", { res: res.data, products: products });
       } catch (err) {
         history.push("/error");
-        console.log(err);
+        throw err;
       }
     };
     stripeToken && total >= 1 && sendToken();

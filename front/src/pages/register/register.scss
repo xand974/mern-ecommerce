@@ -7,7 +7,7 @@
   position: relative;
   .container {
     width: 50vh;
-    height: 50vh;
+    height: 60vh;
     background: #fff;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.377);
     padding: 20px;
@@ -50,6 +50,15 @@
         border-radius: 5px;
 
         cursor: pointer;
+        .loop {
+          animation: turn 2s infinite linear;
+
+          @keyframes turn {
+            to {
+              transform: rotate(-360deg);
+            }
+          }
+        }
       }
     }
     .create__account__text {

@@ -10,7 +10,9 @@ export const wishListSlice = createSlice({
       state.userWishList.push(action.payload);
     },
     removeWishList: (state, action) => {
-      state.userWishList.filter((w) => w._id !== action.payload);
+      state.userWishList = state.userWishList.filter(
+        (w) => w._id !== action.payload
+      );
     },
   },
 });

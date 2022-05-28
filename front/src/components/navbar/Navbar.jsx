@@ -2,14 +2,24 @@ import {
   AccountCircleOutlined,
   SearchOutlined,
   ShoppingBagOutlined,
+  LogoutOutlined,
 } from "@mui/icons-material";
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { logOut } from "redux/apiCall";
 import "./navbar.scss";
+import { useHistory } from "react-router";
 
 export default function Navbar() {
   const { active, quantity } = useSelector((state) => state.carts);
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  const logout = () => {
+    logOut(dispatch);
+    history.push("/login");
+  };
 
   useEffect(() => {}, []);
   return (
@@ -46,6 +56,9 @@ export default function Navbar() {
           <Link to="/user">
             <AccountCircleOutlined className="icon" />
           </Link>
+          <button onClick={() => logout()} className="btn-logout">
+            <LogoutOutlined className="icon" />
+          </button>
         </div>
       </nav>
     </header>

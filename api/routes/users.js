@@ -11,7 +11,7 @@ const router = require("express").Router();
 router.post("/add", [verifyToken, verifyIsAdmin], async (req, res) => {
   try {
     const user = await User.findOne({ username: req.body.username });
-    user && res.status(404).json("user exist");
+    if (user) return res.status(404).json("user exist");
 
     const newUser = new User(req.body);
     await newUser.save();
@@ -25,7 +25,7 @@ router.post("/add", [verifyToken, verifyIsAdmin], async (req, res) => {
 router.get("/one/:id", [verifyToken, verifyIsAdmin], async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
-    !user && res.status(404).json("user not found");
+    if (!user) return res.status(404).json("user not found");
     const { password, ...rest } = user._doc;
     return res.status(200).json(rest);
   } catch (err) {

@@ -18,7 +18,7 @@ router.post("/add", [verifyToken, verifyIsAdmin], async (req, res) => {
 router.get("/one/:id", async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
-    !product && res.status(404).json("product not found");
+    if (!product) return res.status(404).json("product not found");
     return res.status(200).json(product);
   } catch (err) {
     return res.status(500).json(err);

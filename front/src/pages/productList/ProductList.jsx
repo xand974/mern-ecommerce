@@ -29,7 +29,6 @@ export default function ProductList({ printCategory, categoryTitle }) {
       setFilteredProducts(() => {
         return products.filter((item) => {
           return Object.entries(filters).every(([key, value]) => {
-            console.log(item[key]);
             return item[key].includes(value);
           });
         });

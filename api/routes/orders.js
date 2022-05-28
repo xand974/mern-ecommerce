@@ -22,7 +22,7 @@ router.post("/add", verifyToken, async (req, res) => {
 router.get("/one/:id", [verifyToken, verifyUserOrIsAdmin], async (req, res) => {
   try {
     const order = await Order.find({ _id: req.params.id });
-    !order && res.status(404).json("order not found");
+    if (!order) return res.status(404).json("order not found");
   } catch (err) {
     return res.status(500).json(err);
   }

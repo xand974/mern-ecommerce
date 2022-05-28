@@ -1,14 +1,20 @@
 import { LoginOutlined, LoopOutlined } from "@mui/icons-material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { login } from "redux/apiCall";
+import { resetAuth } from "redux/userSlice";
+
 import "./login.scss";
 export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const { error, pending } = useSelector((state) => state.user);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(resetAuth());
+  }, [dispatch]);
 
   const handleClick = () => {
     login({ username, password }, dispatch);
@@ -39,7 +45,7 @@ export default function Login() {
           <button onClick={handleClick}>
             {pending ? <LoopOutlined className="loop" /> : <LoginOutlined />}
           </button>
-          {error && <span style={{ color: "red" }}>Something happened..</span>}
+          {error && <span style={{ color: "red" }}>Bad Credentials..</span>}
         </form>
         <Link to="/register">
           Vous n'avez pas de compte ?{" "}

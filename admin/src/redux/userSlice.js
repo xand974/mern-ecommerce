@@ -60,7 +60,7 @@ export const userSlice = createSlice({
     },
     deleteUserSuccess: (state, action) => {
       state.pending = false;
-      state.users.filter((user) => {
+      state.users = state.users.filter((user) => {
         return user._id !== action.payload;
       });
     },

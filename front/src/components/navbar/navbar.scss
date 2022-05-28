@@ -102,5 +102,16 @@
         }
       }
     }
+    .btn-logout {
+      border: none;
+      background: none;
+      cursor: pointer;
+      margin-left: 6px;
+      position: relative;
+      top: 1px;
+      .icon {
+        font-size: 25px;
+      }
+    }
   }
 }

@@ -1,50 +1,82 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, current } from "@reduxjs/toolkit";
+
+const initialState = {
+  products: [],
+  quantity: 0,
+  total: 0,
+  active: false,
+  pending: false,
+  error: false,
+};
 
 export const cartSlice = createSlice({
   name: "carts",
-  initialState: {
-    products: [],
-    quantity: 0,
-    total: 0,
-    active: false,
-    pending: false,
-    error: false,
-  },
+  initialState,
   reducers: {
-    //ajouter produit
     addProduct: (state, action) => {
-      state.products = [...state.products, action.payload];
-      state.quantity += 1;
-      state.total += action.payload.price * action.payload.quantity;
-      state.active = true;
+      const products = current(state.products);
+      const existingProduct =
+        products.find((item) => item.id === action.payload.id) ?? null;
+      const newTotal =
+        state.total + action.payload.price * action.payload.quantity;
+
+      if (!existingProduct) {
+        return {
+          ...state,
+          products: [...state.products, action.payload],
+          active: true,
+          total: newTotal,
+          quantity: state.quantity + 1,
+        };
+      }
+      const newProducts = products.map((item) => {
+        if (item.id === existingProduct.id) {
+          return {
+            ...item,
+            quantity: item.quantity + action.payload.quantity,
+          };
+        }
+        return item;
+      });
+      return {
+        ...state,
+        products: newProducts,
+        total: newTotal,
+        active: true,
+      };
     },
     removeItem: (state, action) => {
-      if (state.quantity === 0) {
-        state.products = state.products.filter(
-          (product) => product._id !== action.payload
-        );
-        state.quantity = 0;
-      } else {
-        state.quantity -= 1;
-      }
+      const newQuantity = state.quantity === 0 ? 0 : state.quantity - 1;
+      const newProducts = state.products.filter(
+        (product) => product._id !== action.payload
+      );
+      return {
+        ...state,
+        products: newProducts,
+        quantity: newQuantity,
+      };
     },
     calculateTotalMinus: (state, action) => {
-      if (state.total <= 0) {
-        state.total = 0;
-      } else {
-        state.total -= action.payload.price;
-      }
+      const newTotal =
+        state.total <= 0 ? 0 : state.total - action.payload.price;
+      return {
+        ...state,
+        total: newTotal,
+      };
     },
     calculateTotalPlus: (state, action) => {
       state.total += action.payload.price;
       state.quantity += 1;
+      return {
+        ...state,
+        total: state.total + action.payload.price,
+        quantity: state.quantity + 1,
+      };
     },
-    //reset cart
-    resetCart: (state) => {
-      state.active = false;
-      state.products = [];
-      state.total = 0;
-      state.quantity = 0;
+    resetCart: () => {
+      return {
+        state: { ...initialState },
+      };
     },
     sendCartStart: (state) => {
       state.pending = true;
