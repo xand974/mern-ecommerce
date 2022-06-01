@@ -52,6 +52,16 @@ export const sendCart = async (cart, dispatch) => {
   }
 };
 
+export const checkToken = async (token, dispatch) => {
+  try {
+    if (!token) return logOut(dispatch);
+    return await privateRequest.post("/auth/check-auth", token);
+  } catch (error) {
+    logOut(dispatch);
+    throw error;
+  }
+};
+
 export const sendOrder = async (order) => {
   try {
     await privateRequest.post("/orders/add", order);

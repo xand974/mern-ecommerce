@@ -30,7 +30,7 @@ export const cartSlice = createSlice({
         };
       }
       const newProducts = products.map((item) => {
-        if (item.id === existingProduct.id) {
+        if (item._id === existingProduct._id) {
           return {
             ...item,
             quantity: item.quantity + action.payload.quantity,

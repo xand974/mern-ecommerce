@@ -79,6 +79,7 @@ export default function Register() {
           )}
         </form>
         <Link to="/login">
+          vous avez déjà un compte ?{" "}
           <span className="create__account__text">Se connecter</span>
         </Link>
       </div>

@@ -7,7 +7,6 @@ import Product from "pages/product/Product";
 import Cart from "pages/cart/Cart";
 import Login from "pages/login/Login";
 import Register from "pages/register/Register";
-import NotFound from "pages/notFound/NotFound";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Redirect } from "react-router";
 import Bravo from "pages/bravo/Bravo";
@@ -16,14 +15,17 @@ import WishList from "pages/wishList/WishList";
 import Error from "pages/error/Error";
 import jwt from "jwt-decode";
 import { useEffect } from "react";
-import { logOut } from "redux/apiCall";
+import { checkToken, logOut } from "redux/apiCall";
 export default function App() {
   const { currentUser } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (currentUser) {
-      if (jwt(currentUser.accessToken).exp * 1000 < Date.now()) {
+      if (
+        checkToken(currentUser.accessToken, dispatch) &&
+        jwt(currentUser.accessToken).exp * 1000 < Date.now()
+      ) {
         logOut(dispatch);
         window.location.reload();
       }
@@ -33,17 +35,19 @@ export default function App() {
   return (
     <Router>
       <div className="App">
-        <Route path="/login" exact>
-          {currentUser ? <Redirect to="/" /> : <Login />}
-        </Route>
-        <Route path="/register" exact>
-          {currentUser ? <Redirect to="/" /> : <Register />}
-        </Route>
+        <Switch>
+          <Route exact path="/login">
+            {currentUser ? <Redirect to="/" /> : <Login />}
+          </Route>
+          <Route exact path="/register">
+            {currentUser ? <Redirect to="/" /> : <Register />}
+          </Route>
+        </Switch>
         {currentUser ? (
           <>
             <Navbar />
             <Switch>
-              <Route path="/" exact>
+              <Route exact path="/">
                 <Home />
               </Route>
               <Route path="/products" exact>
@@ -71,7 +75,7 @@ export default function App() {
                 <WishList />
               </Route>
               <Route path="*">
-                <NotFound />
+                <Redirect to="/" />
               </Route>
             </Switch>
             <Footer />
