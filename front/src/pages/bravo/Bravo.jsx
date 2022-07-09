@@ -37,11 +37,11 @@ export default function Bravo() {
   }, [currentUser.user?._id]);
 
   return (
-    <div className="bravo" onClick={() => setDetailClicked(false)}>
+    <div className="bravo">
       <ClipLoader loading={loading} css={override} />
       <div className="order__resume--container">
         <h1 className="order__resume--title">My Orders</h1>
-        <div className="order__wrapper">
+        <div className={`order__wrapper  ${detailClicked ? "active" : ""} `}>
           {orders.map((order, index) => (
             <OrderCard
               order={order}

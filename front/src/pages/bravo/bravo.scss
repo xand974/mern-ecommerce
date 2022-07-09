@@ -14,22 +14,30 @@
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
+      flex-direction: column;
+      align-items: center;
+      transition: all 0.7s ease;
+      &.active {
+        transform: translateX(-20vw);
+      }
     }
   }
   .order__detail--container {
-    width: 80vw;
+    width: 37vw;
     position: absolute;
-    right: -100vw;
+
     background: #000;
-    transition: all 0.3s ease;
+    transition: all 0.7s ease;
     z-index: 1000 !important;
-    height: 100%;
+    height: calc(100% - 128px);
+    bottom: 20px;
+    border-radius: 12px;
 
     &.active {
-      transform: translateX(-100vw);
+      right: 0;
     }
     &.hidden {
-      transform: translateX(100vw);
+      right: -100vw;
     }
   }
 }

@@ -27,7 +27,6 @@ export default function App() {
         jwt(currentUser.accessToken).exp * 1000 < Date.now()
       ) {
         logOut(dispatch);
-        window.location.reload();
       }
     }
   }, [currentUser, dispatch]);
